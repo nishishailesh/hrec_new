@@ -1,0 +1,68 @@
+			 <tr>
+				   <th>Proposal Type</th>
+				   <td>';
+				   mk_select_from_array('type',$GLOBALS['proposal_type'],'','');
+				   echo '</td>';
+				   echo '<td>Select appropriate type of proposal</td>';
+			echo '</tr>
+
+			 <tr>
+				   <th>Interventional Research</th>
+				   <td>';
+				   mk_select_from_array('interventional_research',['no','yes'],'','');
+				   echo '</td>';
+				   echo '<td>Is it Interventional Research?</td>';
+			echo '</tr>
+
+
+			 <tr>
+				   <th>Research on vulnerable subjects</th>
+				   <td>';
+				   mk_select_from_array('research_on_vulnerable_subjects',['no','yes'],'','');
+				   echo '</td>';
+				   echo '<td>Are study subjects vulnerable? give detailed description of subjects</td>';
+			echo '</tr>
+
+			 <tr>
+				   <th>Description of study subjects</th>
+				   <td><textarea name=description_of_study_subjects class="form-control"  placeholder="Enter Detailed description of study subjects"></textarea></td>
+				   <td>Must be same as what is uploaded in protocol</td>
+			</tr>';
+			
+			echo '</tr>
+			
+			 <tr>
+				   <th>Additional_remarks</th>
+				   <td><textarea name=additional_remarks class="form-control"  placeholder="Write relavent remarks"></textarea></td>
+				   <td>If relavent</td>
+			</tr>';
+			
+			echo '</tr>			 
+			 
+			 <tr>			 
+				   <th>Researcher</th>
+				   <td><input name=guide class="form-control"  placeholder="Name of Researcher"></td>
+				   <td>If applying on behalf of UG/PG student, write name of UG/PG Student</td>
+			</tr>	
+			<tr>
+			       <th>Researcher Email id</th>
+			       <td><input name=emailid class="form-control"  placeholder="Enter Email Id"></td>
+			       <td>If applying on behalf of UG/PG student, write Researcher Email id of UG/PG Student</td>
+			</tr>	
+			<tr>
+			       <th>Researcher Mobile No.</th>
+			       <td><input name=mobileno class="form-control"  placeholder="Enter Mobile No."></td>
+			       <td>If applying on behalf of UG/PG student, write Researcher Mobile Number of UG/PG Student</td>
+			</tr>	
+			<tr>
+				   <th>Year of Admission</th>
+				   <td><input name=year pattern="^20[0-9][0-9]$"class="form-control"  placeholder="Enter Year As 20YY"></td>
+				   <td>If applying on behalf of UG/PG student, write Year of Admission of UG/PG Student</td>
+				  
+			</tr>	
+				<tr>
+				   <th>Department</th>
+				   <td>';
+				   mk_select_from_array('dept_type',$GLOBALS['Department_Type'],'','');
+				   echo'</td>
+				   <td>If applying on behalf of UG/PG student, select Department of UG/PG Student</td>

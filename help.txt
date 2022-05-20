@@ -1,0 +1,61 @@
+login
+	if type=applicant
+		add/edit/view their own [proposal]
+		view/add [comment] of their own praposal
+		view [decision] of their own praposal
+	
+	if type=reviewer
+		view [proposal] if they are to make decision
+		view/edit their approval field of [decision]
+		view/add [comment] on proposal if they are to make decision
+
+	if type=src chairman
+		add/view/delete all fields of [decision] but can not edit approval field
+
+	if type=ec chairman
+		add/view/delete all fields of [decision] but can not edit approval field
+
+====commandline github============
+curl -u 'nishishailesh' https://api.github.com/user/repos -d '{"name":"research"}'
+
+touch README.md
+git init
+git add *
+git commit -m "first commit"
+git remote add origin https://github.com/nishishailesh/research.git
+git push -u origin master
+
+git branch home
+git checkout home
+
+make changes as required
+git add XYZ if required
+git commit
+git status (as often required)
+
+git remote add home https://github.com/nishishailesh/research.git
+git remote  -v
+
+git push home (to push current branch to home remote)
+
+======Steps to pull a specific branch from github======================
+
+cd research.college/
+git init
+git remote add xyz https://github.com/nishishailesh/research
+git remote -r
+git fetch xyz
+git branch -r
+git branch local.home xyz/home
+git checkout local.home
+
+======define remote research, move coll branch to master====
+research is local short form for remote repository
+coll is current branch name (pulled before, then changed)
+master is remote branch name
+command is:
+
+git push research coll:master
+
+
+
