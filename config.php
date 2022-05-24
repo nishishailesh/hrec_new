@@ -2,7 +2,7 @@
 //$GLOBALS['main_user']='root';
 //$GLOBALS['main_pass']='root';
 $GLOBALS['main_user_location']='/var/gmcs_config/staff.conf';
-$GLOBALS['user_database']='research';
+$GLOBALS['user_database']='hrec_new';
 $GLOBALS['user_table']='user';
 $GLOBALS['user_id']='id';
 $GLOBALS['user_pass']='password';

@@ -1418,7 +1418,7 @@ function get_application_data($link)
 				   <td>';
 				   mk_select_from_array('research_on_vulnerable_subjects',['no','yes'],'','');
 				   echo '</td>';
-				   echo '<td>Are study subjects vulnerable? give detailed description of subjects</td>';
+				   echo '<td>subjects vulnerable?<a href="https://main.icmr.nic.in/sites/default/files/guidelines/ICMR_Ethical_Guidelines_2017.pdf">ICMR Guideline(See Chapter.6)</a></td>';
 			echo '</tr>
 
 			 <tr>
@@ -2777,9 +2777,12 @@ function export_data($result)
 
 function is_user_type($link,$user_id,$type)
 {
+	echo '<pre>'.$user_id;
 	$ui=get_user_info($link,$user_id);
+	print_r($ui);
+	print_r($ui['type']);
 	$ex=explode('|',$ui['type']);
-	//print_r($ex);
+	print_r($ex);
 	if(in_array($type,$ex)){return true;}
 	else{return false;}
 }
