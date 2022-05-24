@@ -17,7 +17,7 @@ function display_msg($link)
 	
 	///////////////
 	$sql_a='select id from proposal where applicant_id=\''.$_SESSION['login'].'\' and status!=\'070.ecms_approved\'';
-	$result_a=run_query($link,$GLOBALS['user_database'],$sql_a);
+	$result_a=run_query($link,$GLOBALS['database'],$sql_a);
 	$my_application=array();
 	while($ar_a=get_single_row($result_a))
 	{
@@ -34,7 +34,7 @@ function display_msg($link)
 								order by date_time desc limit '.$GLOBALS['recent_activity_data_count'];
 	
 	//echo $sql_application_comment;
-	$result_application_comment=run_query($link,$GLOBALS['user_database'],$sql_application_comment);
+	$result_application_comment=run_query($link,$GLOBALS['database'],$sql_application_comment);
 
 	echo '<table border=1 class="table table-striped table-sm"><tr><th colspan=4>Recent activity in proposals by me</th></tr><tr><th>Proposal ID</th><th>Proposal</th><th>Comment by</th><th>Date and Time</th></tr>';
 
@@ -65,7 +65,7 @@ function display_msg($link)
 	/////////////////
 	$sql_r='select proposal_id from decision where reviewer_id=\''.$_SESSION['login'].'\'';
 	
-	$result_r=run_query($link,$GLOBALS['user_database'],$sql_r);
+	$result_r=run_query($link,$GLOBALS['database'],$sql_r);
 	$my_review=array();
 	while($ar_r=get_single_row($result_r))
 	{
@@ -90,7 +90,7 @@ function display_msg($link)
 
 
 	//echo $sql_review_comment;
-	$result_review_comment=run_query($link,$GLOBALS['user_database'],$sql_review_comment);
+	$result_review_comment=run_query($link,$GLOBALS['database'],$sql_review_comment);
 
 	echo '<table border=1 class="table table-striped table-sm"><th colspan=4>Recent activity in proposals where I am Reviewer</th><tr><th>Proposal ID</th><th>Proposal</th><th>Comment by</th><th>Date and Time</th></tr>';
 

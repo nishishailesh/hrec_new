@@ -28,7 +28,7 @@ $action=$_POST['action'];
 
 	$user_info=get_user_info($link,get_applicant_id($link,$proposal_id));
 
-	$result=run_query($link,'research','select * from proposal where id=\''.$proposal_id.'\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from proposal where id=\''.$proposal_id.'\'');
 	$ar=get_single_row($result);
 	
 ob_start();

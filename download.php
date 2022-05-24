@@ -15,7 +15,7 @@ require_once 'research_common.php';
 	}
 
 	$link=get_link($GLOBALS['main_user'],$GLOBALS['main_pass']);
-	download($link,'research',$_POST['table'],$_POST['field'],$_POST['primary_key'],$_POST['primary_key_value'],$postfix);
+	download($link,$GLOBALS['database'],$_POST['table'],$_POST['field'],$_POST['primary_key'],$_POST['primary_key_value'],$postfix);
 
 function download($link,$d,$t,$f,$pk,$pkv,$postfix='')
 {

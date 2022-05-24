@@ -2,12 +2,12 @@
 
 function get_user_info($link,$id)
 {
-	$result=run_query($link,'research','select * from user where id=\''.$id.'\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from user where id=\''.$id.'\'');
 	return get_single_row($result);
 }
 function get_user_info1($link,$id)
 {
-	$result=run_query($link,'research','select * from proposal where id=\''.$id.'\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from proposal where id=\''.$id.'\'');
 	return get_single_row($result);
 }
 
@@ -21,7 +21,7 @@ function my_print_r($a)
 //this function is never used
 function list_application_for_srcm_assignment($link)
 {
-	$result=run_query($link,'research','select * from proposal where status=\'001.applied\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from proposal where status=\'001.applied\'');
 	echo '<table class="table table-striped"><tr><th colspan=10>List of research application where reviewer assignment is incomplate</th></tr>
 			<tr><th>proposal id</th><th>Applicant id/Name/Department</th><th>Title</th><th>DateTime</th><th>Status</th></tr>';
 	while($ar=get_single_row($result))
@@ -46,7 +46,7 @@ function list_application_for_srcm_assignment($link)
 
 function list_application_status($link,$status,$action='none',$message='')
 {
-	$result=run_query($link,'research','select * from proposal where status=\''.$status.'\' and (forwarded!=1 or forwarded is null) ');
+	$result=run_query($link,$GLOBALS['database'],'select * from proposal where status=\''.$status.'\' and (forwarded!=1 or forwarded is null) ');
 	echo '<table class="table table-striped"><tr><th colspan=10>List of research application with current status of <span class=bg-danger>'.$status.'</span></th></tr>
 			<tr><th>proposal id</th><th>Applicant id/Name/Department</th><th>Title</th><th>DateTime</th><th>Status</th></tr>';
 	while($ar=get_single_row($result))
@@ -90,7 +90,7 @@ function list_application_status($link,$status,$action='none',$message='')
 
 function list_application_status_multiple($link,$status,$action=array('none'))
 {
-	$result=run_query($link,'research','select * from proposal where status=\''.$status.'\' and (forwarded!=1 or forwarded is null) ');
+	$result=run_query($link,$GLOBALS['database'],'select * from proposal where status=\''.$status.'\' and (forwarded!=1 or forwarded is null) ');
 	echo '<table class="table table-striped"><tr><th colspan=10>List of research application with current status of <span class=bg-danger>'.$status.'</span></th></tr>
 			<tr><th>proposal id</th><th>Applicant id/Name/Department</th><th>Title</th><th>DateTime</th><th>Status</th></tr>';
 	while($ar=get_single_row($result))
@@ -148,7 +148,7 @@ function list_application_for_reviewer($link,$status,$action='none',$reviewer_id
 					applicant_id!=\''.$reviewer_id.'\'
 					';
 	//echo $sql;				
-	$result=run_query($link,'research',$sql);
+	$result=run_query($link,$GLOBALS['database'],$sql);
 	echo '<table class="table table-striped">
 			<tr><th colspan=10>List of research application with current status of <span class=bg-danger>'.$status.'</span></th></tr>
 			<tr><th>proposal id</th><th>Applicant</th><th>Reviewer</th><th>Title</th><th>DateTime</th><th>Status</th></tr>';
@@ -186,7 +186,7 @@ function list_application_for_reviewer($link,$status,$action='none',$reviewer_id
 
 function list_single_application($link,$id)
 {
-	$result=run_query($link,'research','select * from proposal where id=\''.$id.'\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from proposal where id=\''.$id.'\'');
 	echo '<table class="table table-warning table-bordered">
 			<tr><th>proposal id</th><th>applicant id/name/department</th><th>Proposal</th><th>DateTime</th><th>Status</th></tr>';
 	while($ar=get_single_row($result))
@@ -226,7 +226,7 @@ function echo_download_button($table,$field,$primary_key,$primary_key_value,$pos
 
 function list_single_application_with_all_fields($link,$id)
 {
-	$result=run_query($link,'research','select * from proposal where id=\''.$id.'\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from proposal where id=\''.$id.'\'');
 	echo '<table class="table table-warning table-bordered">
 			<tr class="bg-success"><th>proposal id</th>
 			<th>applicant</th>
@@ -452,7 +452,7 @@ function show_forward_attachment_button_original($link,$attachment_id)
 
 function list_attachment($link,$proposal_id)
 {
-	//$result=run_query($link,'research','select * from attachment where proposal_id=\''.$proposal_id.'\' order by date_time');
+	//$result=run_query($link,$GLOBALS['database'],'select * from attachment where proposal_id=\''.$proposal_id.'\' order by date_time');
 
 		echo '<table class="table table-warning table-bordered">';
 		echo '<tr class="bg-success"><th>Attachment Type</th><th>Version</th><th>Document</th></tr>';	
@@ -466,7 +466,7 @@ foreach($GLOBALS['attachment_type'] as $key =>$value)
 				order by
 					date_time';
 					
-		$result=run_query($link,'research',$sql);
+		$result=run_query($link,$GLOBALS['database'],$sql);
 
 		$prev_type='';
 		while($ar=get_single_row($result))
@@ -552,7 +552,7 @@ function display_comment($link,$proposal_id)
 
 	$applicant_id=get_applicant_id($link,$proposal_id);
 	
-	$result=run_query($link,'research','select * from comment where proposal_id=\''.$proposal_id.'\' order by date_time DESC');
+	$result=run_query($link,$GLOBALS['database'],'select * from comment where proposal_id=\''.$proposal_id.'\' order by date_time DESC');
 	while($ar=get_single_row($result))
 	{
 		echo '<div class="border border-secondary" >';
@@ -662,12 +662,12 @@ function make_comment($link,$proposal_id)
 
 function get_proposal_info($link,$proposal_id)
 {
-	$result=run_query($link,'research','select * from proposal where id=\''.$proposal_id.'\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from proposal where id=\''.$proposal_id.'\'');
 	return get_single_row($result);
 }
 function get_comment_info($link,$proposal_id)
 {
-	$result=run_query($link,'research','select * from comment where proposal_id=\''.$proposal_id.'\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from comment where proposal_id=\''.$proposal_id.'\'');
 	return get_single_row($result);
 }
 
@@ -685,7 +685,7 @@ function save_comment($link,$reviewer_id,$proposal_id,$comment,$attachment='',$a
 			)';
 
 	//echo $sql;
-	if(!run_query($link,'research',$sql))
+	if(!run_query($link,$GLOBALS['database'],$sql))
 	{
 		echo '<br><span class="text-danger">Comment not Saved</span>';
 	}
@@ -726,7 +726,7 @@ function save_comment_for_reviewer_assignment($link,$reviewer_id,$proposal_id)
 			)';
 
 	//echo $sql;
-	if(!run_query($link,'research',$sql))
+	if(!run_query($link,$GLOBALS['database'],$sql))
 	{
 		echo '<br><span class="text-danger">Comment not Saved</span>';
 	}
@@ -759,7 +759,7 @@ function send_all_emails($link,$proposal_id,$comment)
 {
 	if($GLOBALS['send_email']!=1){return;}
 	$result='select * from proposal where  id=\''.$proposal_id.'\'';
-	$result_selected=run_query($link,'research',$result);
+	$result_selected=run_query($link,$GLOBALS['database'],$result);
 	$ar=get_single_row($result_selected);
 
 		
@@ -868,7 +868,7 @@ function pending_review($link,$proposal_id)
 				approval=0 and
 				user.id!=\''.$applicant_id.'\'';
 				
-	$result_selected=run_query($link,'research',$sql);
+	$result_selected=run_query($link,$GLOBALS['database'],$sql);
 	$ar=get_single_row($result_selected);
 	return $ar['pending_review'];
 }
@@ -884,7 +884,7 @@ function save_approve($link,$reviewer_id,$proposal_id,$comment)
 				reviewer_id=\''.$reviewer_id.'\'';
 
 
-	if(!run_query($link,'research',$sql))
+	if(!run_query($link,$GLOBALS['database'],$sql))
 	{
 		echo '<span class="text-danger">Your approval not saved</span>';
 	}
@@ -968,41 +968,41 @@ function set_application_status($link,$id,$status)
 {
 	$sql='update proposal set status=\''.$status.'\' where id=\''.$id.'\'';
 	//echo $sql;
-	$result=run_query($link,'research',$sql);
+	$result=run_query($link,$GLOBALS['database'],$sql);
 	return $result;
 }
 
 
 function get_application_status($link,$id)
 {
-	$result=run_query($link,'research','select * from proposal where id=\''.$id.'\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from proposal where id=\''.$id.'\'');
 	$ar=get_single_row($result);
 	return $ar['status'];
 }
 
 function get_attachment_forwarding_status($link,$id)
 {
-	$result=run_query($link,'research','select * from attachment where id=\''.$id.'\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from attachment where id=\''.$id.'\'');
 	$ar=get_single_row($result);
 	return $ar['forwarded'];
 }
 
 function get_attachment_applicant_id($link,$id)
 {
-	$result=run_query($link,'research','select * from attachment where id=\''.$id.'\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from attachment where id=\''.$id.'\'');
 	$ar=get_single_row($result);
 	return get_applicant_id($link,$ar['proposal_id']);	
 }
 
 function forward_attachment($link,$id)
 {
-	$result=run_query($link,'research','update attachment set forwarded=0 where id=\''.$id.'\'');
+	$result=run_query($link,$GLOBALS['database'],'update attachment set forwarded=0 where id=\''.$id.'\'');
 	return $result;
 }
 
 function get_applicant_id($link,$proposal_id)
 {
-	$result=run_query($link,'research','select * from proposal where id=\''.$proposal_id.'\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from proposal where id=\''.$proposal_id.'\'');
 	$ar=get_single_row($result);
 	return $ar['applicant_id'];
 }
@@ -1017,7 +1017,7 @@ function get_selected_srcm_reviewer($link,$proposal_id)
 				user.id=decision.reviewer_id and
 				user.id!=\''.$applicant_id.'\'';
 				
-	$result_selected=run_query($link,'research',$sql);
+	$result_selected=run_query($link,$GLOBALS['database'],$sql);
 	
 	$ret=array();
 	while($ar=get_single_row($result_selected))
@@ -1038,7 +1038,7 @@ function get_only_srcm_reviewer($link,$proposal_id)
 				user.id!=\''.$applicant_id.'\' and
 				type REGEXP \'srcm$\' or type REGEXP \'srcm[^s]\'';
 				
-	$result_selected=run_query($link,'research',$sql);
+	$result_selected=run_query($link,$GLOBALS['database'],$sql);
 	
 	$ret=array();
 	while($ar=get_single_row($result_selected))
@@ -1062,7 +1062,7 @@ function count_selected_srcm_reviewer($link,$proposal_id)
 				
 	//applicant is not counted
 				
-	$result_selected=run_query($link,'research',$sql);
+	$result_selected=run_query($link,$GLOBALS['database'],$sql);
 	$ar=get_single_row($result_selected);
 	return $ar['total_selected'];
 }
@@ -1077,7 +1077,7 @@ function list_srcm_reviewer($link,$proposal_id)
 								and
 								id!=\''.$applicant_id.'\' order by name';
 
-	$result=run_query($link,'research',$sql_eligible_reviewer);
+	$result=run_query($link,$GLOBALS['database'],$sql_eligible_reviewer);
 
 	$selected_reviewer=get_selected_srcm_reviewer($link,$proposal_id);
 
@@ -1115,7 +1115,7 @@ function show_review_status($link,$proposal_id)
 				proposal_id=\''.$proposal_id.'\'
 					and
 				reviewer_id!=\''.$applicant_id.'\'';
-	$result=run_query($link,'research',$sql);
+	$result=run_query($link,$GLOBALS['database'],$sql);
 
 
 	echo '<table class="table table-striped table-success">
@@ -1130,7 +1130,7 @@ function show_review_status($link,$proposal_id)
 			    proposal_id=\''.$proposal_id.'\' 
 			    and 
 			    reviewer_id=\''.$ar['reviewer_id'].'\'';
-			    $result1=run_query($link,'research',$sql);
+			    $result1=run_query($link,$GLOBALS['database'],$sql);
 			    
 			   while($ar1=get_single_row($result1))
 	          { 
@@ -1192,8 +1192,8 @@ function reverse_approval($link,$proposal_id,$reviewer_id,$comment)
 
 function save_srcm_reviewer($link,$post)
 {
-	//$result=run_query($link,'research','select * from user where type=\'srcm\' || type=\'srcms\'');
-	$result=run_query($link,'research','select * from user where type REGEXP \'srcm$\' or type REGEXP \'srcm[^s]\'');
+	//$result=run_query($link,$GLOBALS['database'],'select * from user where type=\'srcm\' || type=\'srcms\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from user where type REGEXP \'srcm$\' or type REGEXP \'srcm[^s]\'');
 
 	$selected_reviewer=get_selected_srcm_reviewer($link,$post['proposal_id']);
 		
@@ -1210,7 +1210,7 @@ function save_srcm_reviewer($link,$post)
 						reviewer_id!=\''.$applicant_id.'\'
 						';
 						
-				if(!run_query($link,'research',$sql_del))
+				if(!run_query($link,$GLOBALS['database'],$sql_del))
 				{
 					//echo $sql_del.'<br>';
 					echo '<p><span class="text-danger">reviewers who already commented on proposal can not be deleted!!(No error)</span><br></p>';
@@ -1235,7 +1235,7 @@ function save_srcm_reviewer($link,$post)
 					\'0\')';
 				//echo $sql.'<br>';
 				echo '<p><span class="text-danger">...adding user_id='.$ar['id'].' as reviewer for proposal_id='.$post['proposal_id'].'</span>';
-				if(!run_query($link,'research',$sql))
+				if(!run_query($link,$GLOBALS['database'],$sql))
 				{
 					echo '<p><span class="text-danger">'.$sql.'</span>';					
 				}
@@ -1309,7 +1309,7 @@ function list_researcher_application($link)
 						value=new_application>New Appliction</button>
 				 </form>';
 	
-	$result=run_query($link,'research','select * from proposal where applicant_id=\''.$_SESSION['login'].'\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from proposal where applicant_id=\''.$_SESSION['login'].'\'');
 		echo '<table class="table table-striped">
 			<tr><th colspan=10 class="text-center">Click respective <span class="badge badge-secondary">Proposal ID</span> to Edit and upload documents</th></tr>
 			<tr>
@@ -1362,7 +1362,7 @@ function get_proposal_upload_comment_status($link,$proposal_id)
 
 function count_not_forwarded_comments($link,$proposal_id)
 {
-	$result=run_query($link,'research','select count(id) tnf from comment where proposal_id=\''.$proposal_id.'\' and forwarded=1');
+	$result=run_query($link,$GLOBALS['database'],'select count(id) tnf from comment where proposal_id=\''.$proposal_id.'\' and forwarded=1');
 	$ar=get_single_row($result);
 	//print_r($ar);
 	return $ar['tnf'];
@@ -1377,7 +1377,7 @@ function count_not_forwarded_uploads($link,$proposal_id)
 					and
 					forwarded=1'; 
 					
-		$result=run_query($link,'research',$sql);
+		$result=run_query($link,$GLOBALS['database'],$sql);
 		$ar=get_single_row($result);
 		//print_r($ar);
 		return $ar['anf'];
@@ -1534,7 +1534,7 @@ function insert_application($link,$aid,$pname,$type,
 			\'001.applied\')';
 	 	
 	 	
-	$result=run_query($link,'research',$sql);
+	$result=run_query($link,$GLOBALS['database'],$sql);
 	//echo $sql;
     if($result==false)
 	{
@@ -1558,7 +1558,7 @@ Login frequently and view emails to be up-to-date about this application';
 
 	save_comment($link,$aid,$new_proposal_id,$comment);
 	$sql1="select * from user where type='srcms' ";
-	$result=run_query($link,'research',$sql1);
+	$result=run_query($link,$GLOBALS['database'],$sql1);
 	$srcms_comment='<h2><b>HREC, GMC Surat.</b></h2>
 	<h3><b>Proposal ID:- <u style=\'color: green;font-family: arial, sans-serif;font-weight: bold;\'>'.$new_proposal_id.'</u><br>
 	Proposal Name:- <u style=\'color: #800080;font-family: arial, sans-serif;font-weight: bold;\'>'.$pname.'</u></b></h3>
@@ -1583,7 +1583,7 @@ function save_email_for_send_to_ecms($link,$proposal_id)
 {
 	$pinfo=get_proposal_info($link,$proposal_id);
 	$sql1="select * from user where type='ecms' ";
-	$result=run_query($link,'research',$sql1);
+	$result=run_query($link,$GLOBALS['database'],$sql1);
 	$ecms_comment='<h2><b>HREC, GMC Surat.</b></h2>
 	<h3><b>Proposal ID:- <u style=\'color: green;font-family: arial, sans-serif;font-weight: bold;\'>'.$proposal_id.'</u><br>
 	Proposal Name:- <u style=\'color: #800080;font-family: arial, sans-serif;font-weight: bold;\'>'.$pinfo['proposal_name'].'</u></b></h3>
@@ -1609,7 +1609,7 @@ function insert_reviewer($link,$proposal_id,$reviewer_id)
 	\''.$reviewer_id.'\',
 	\'0\')';
 	//echo $sql.'<br>';
-	if(!run_query($link,'research',$sql))
+	if(!run_query($link,$GLOBALS['database'],$sql))
 	{
 		echo '<p><span class="text-danger">'.$sql.'</span>';					
 	}
@@ -1621,7 +1621,7 @@ function insert_reviewer($link,$proposal_id,$reviewer_id)
 
 function edit_application($link,$proposal_id,$readonly='')
 {	
-		$result=run_query($link,'research','select * from proposal where id=\''.$proposal_id.'\' ');
+		$result=run_query($link,$GLOBALS['database'],'select * from proposal where id=\''.$proposal_id.'\' ');
 
 		while($ar=get_single_row($result))
 	   {
@@ -1746,7 +1746,7 @@ function save_application_field($link,$aid,$field,$value)
 	$sql='UPDATE proposal SET 
 		`'.$field.'` =\''.$value.'\'
 		WHERE id=\''.$aid.'\'';
-	$result=run_query($link,'research',$sql);
+	$result=run_query($link,$GLOBALS['database'],$sql);
     //return TRUE;
 	if($result==false)
 	{
@@ -1852,7 +1852,7 @@ function save_attachement($link,$proposal_id,$type,$blob,$attachment_name)
 					\''.$attachment_name.'\'
 				)';
 		
-	$result=run_query($link,'research',$sql);
+	$result=run_query($link,$GLOBALS['database'],$sql);
 	if($result==false)
 	{
 		echo '<h5 style="color:red;"> nothing updated.too big??</h5>';
@@ -1919,7 +1919,7 @@ function list_ecm_reviewer($link,$proposal_id,$ecm_string)
 								and
 								id!=\''.$applicant_id.'\'';
 	//echo 	$sql_eligible_reviewer;
-	$result=run_query($link,'research',$sql_eligible_reviewer);
+	$result=run_query($link,$GLOBALS['database'],$sql_eligible_reviewer);
 
 	$selected_reviewer=get_selected_ecm_reviewer($link,$proposal_id);
 
@@ -1958,7 +1958,7 @@ function get_selected_ecm_reviewer($link,$proposal_id)
 				user.id=decision.reviewer_id and
 				user.id!=\''.$applicant_id.'\'';
 				
-	$result_selected=run_query($link,'research',$sql);
+	$result_selected=run_query($link,$GLOBALS['database'],$sql);
 	
 	$ret=array();
 	while($ar=get_single_row($result_selected))
@@ -1979,7 +1979,7 @@ function get_only_ecm_reviewer($link,$proposal_id)
 				user.id!=\''.$applicant_id.'\' and
 				type REGEXP \'ecm$\' or type REGEXP \'ecm[^s]\'';
 				
-	$result_selected=run_query($link,'research',$sql);
+	$result_selected=run_query($link,$GLOBALS['database'],$sql);
 	
 	$ret=array();
 	while($ar=get_single_row($result_selected))
@@ -1992,7 +1992,7 @@ function get_only_ecm_reviewer($link,$proposal_id)
 
 function save_ecm_reviewer($link,$post,$ecm_status_type)
 {
-	$result=run_query($link,'research','select * from user');
+	$result=run_query($link,$GLOBALS['database'],'select * from user');
 
 	$selected_reviewer=get_selected_ecm_reviewer($link,$post['proposal_id']);
 	$applicant_id=get_applicant_id($link,$post['proposal_id']);
@@ -2009,7 +2009,7 @@ function save_ecm_reviewer($link,$post,$ecm_status_type)
 						reviewer_id!=\''.$applicant_id.'\'
 						';
 						
-				if(!run_query($link,'research',$sql_del))
+				if(!run_query($link,$GLOBALS['database'],$sql_del))
 				{
 					//echo $sql_del.'<br>';
 					echo '<p><span class="text-danger">reviewers who already commented on proposal can not be deleted!!(Not Error)</span><br></p>';
@@ -2034,7 +2034,7 @@ function save_ecm_reviewer($link,$post,$ecm_status_type)
 					\'0\')';
 				//echo $sql.'<br>';
 				echo '<p><span class="text-danger">...adding user_id='.$ar['id'].' as reviewer for proposal_id='.$post['proposal_id'].'</span>';
-				if(!run_query($link,'research',$sql))
+				if(!run_query($link,$GLOBALS['database'],$sql))
 				{
 					echo '<p><span class="text-danger">'.$sql.'</span>';					
 				}
@@ -2091,7 +2091,7 @@ function count_selected_ecm_reviewer($link,$proposal_id)
 
 	//applicant is not counted
 				
-	$result_selected=run_query($link,'research',$sql);
+	$result_selected=run_query($link,$GLOBALS['database'],$sql);
 	$ar=get_single_row($result_selected);
 	return $ar['total_selected'];
 }
@@ -2133,7 +2133,7 @@ function view_entire_application_ecm($link,$proposal_id)
 
 function print_approval_latter($link,$status,$action='none',$message='')
 {
-	$result=run_query($link,'research','select * from proposal where status=\''.$status.'\'');
+	$result=run_query($link,$GLOBALS['database'],'select * from proposal where status=\''.$status.'\'');
 	echo '<table class="table table-striped"><tr><th colspan=10>List of research application with current status of <span class=bg-danger>'.$status.'</span></th></tr>
 			<tr><th>proposal id</th><th>Applicant id/Name/Department</th><th>Proposal</th><th>DateTime</th><th>Status</th></tr>';
 	while($ar=get_single_row($result))
@@ -2368,7 +2368,7 @@ echo'
 function list_application_status_for_ecms_final($link,$status)
 {
 	$sql='select * from proposal where status=\''.$status.'\'';
-	$result=run_query($link,'research',$sql);
+	$result=run_query($link,$GLOBALS['database'],$sql);
 	echo '<table class="table table-striped"><tr><th colspan=10>List of research application with current status of <span class=bg-danger>'.$status.'</span></th></tr>
 			<tr><th>proposal id</th><th>Applicant id/Name/Department</th><th>Title</th><th>DateTime</th><th>Status</th></tr>';
 	while($ar=get_single_row($result))
@@ -2415,7 +2415,7 @@ function save_unapprove_ec($link,$reviewer_id,$proposal_id,$comment)
 				reviewer_id=\''.$reviewer_id.'\'';
 
 	//echo $sql;
-	if(!run_query($link,'research',$sql))
+	if(!run_query($link,$GLOBALS['database'],$sql))
 	{
 		echo '<br><span class="text-danger">Unapproval failed</span>';
 	}
@@ -2433,7 +2433,7 @@ function show_dashboard($link)
 
 function get_sql($link)
 {
-        if(!$result=run_query($link,'research','select * from view_info_data')){return false;}
+        if(!$result=run_query($link,$GLOBALS['database'],'select * from view_info_data')){return false;}
 
         echo '
         <table border=1 class="table-striped table-hover"><tr><th colspan=20>Select the data to view</th></tr>';
@@ -2486,7 +2486,7 @@ function get_sql($link)
 function prepare_result_from_view_data_id($link,$id)
 {
 
-         if(!$result_id=run_query($link,'research','select * from view_info_data where id=\''.$id.'\''))
+         if(!$result_id=run_query($link,$GLOBALS['database'],'select * from view_info_data where id=\''.$id.'\''))
          {
 			 //echo '<h1>Problem</h1>';
 		 }
@@ -2575,7 +2575,7 @@ function prepare_result_from_view_data_id($link,$id)
 		//echo $sql;
 
 
-        if(!$result=run_query($link,'research',$sql))
+        if(!$result=run_query($link,$GLOBALS['database'],$sql))
         {
 			 echo '<h1>Problem</h1>';
 		}
@@ -2650,7 +2650,7 @@ function display_sql_result_data($result)
 function prepare_result_for_export($link,$id)
 {
 
-         if(!$result_id=run_query($link,'research','select * from view_info_data where id=\''.$id.'\''))
+         if(!$result_id=run_query($link,$GLOBALS['database'],'select * from view_info_data where id=\''.$id.'\''))
          {
 			 //echo '<h1>Problem</h1>';
 		 }
@@ -2739,7 +2739,7 @@ function prepare_result_for_export($link,$id)
 		//echo $sql;
 
 
-        if(!$result=run_query($link,'research',$sql))
+        if(!$result=run_query($link,$GLOBALS['database'],$sql))
         {
 			 echo '<h1>Problem</h1>';
 		}
@@ -2777,12 +2777,12 @@ function export_data($result)
 
 function is_user_type($link,$user_id,$type)
 {
-	echo '<pre>'.$user_id;
+	//echo '<pre>'.$user_id;
 	$ui=get_user_info($link,$user_id);
-	print_r($ui);
-	print_r($ui['type']);
+	//print_r($ui);
+	//print_r($ui['type']);
 	$ex=explode('|',$ui['type']);
-	print_r($ex);
+	//print_r($ex);
 	if(in_array($type,$ex)){return true;}
 	else{return false;}
 }

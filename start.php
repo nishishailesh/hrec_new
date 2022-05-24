@@ -108,7 +108,7 @@ require_once 'research_common.php';
 	    	    
 		if($_POST['action']=='delete_appication')
         	{
-				delete($link,'research',$_POST['table'],$_POST['primary_key'],$_POST['primary_key_value']);
+				delete($link,$GLOBALS['database'],$_POST['table'],$_POST['primary_key'],$_POST['primary_key_value']);
 				$_SESSION['dsp']='researcher';
 			}
        
@@ -433,7 +433,7 @@ require_once 'research_common.php';
 	    	    
 		if($_POST['action']=='delete_appication')
         	{
-				//delete($link,'research',$_POST['table'],$_POST['primary_key'],$_POST['primary_key_value']);
+				//delete($link,$GLOBALS['database'],$_POST['table'],$_POST['primary_key'],$_POST['primary_key_value']);
 				//$_SESSION['dsp']='researcher';
 			}
        

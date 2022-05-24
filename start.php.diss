@@ -34,7 +34,7 @@ require_once 'research_common.php';
 	elseif($_POST['action']=='show_proposal')
 	{
 		$real_proposal_sql='select * from proposal where id=\''.$_POST['proposal_id'].'\' and applicant_id=\''.$_POST['pg_teacher'].'\'';
-		$real_proposal_result=run_query($link,'research',$real_proposal_sql);
+		$real_proposal_result=run_query($link,$GLOBALS['database'],$real_proposal_sql);
 		$ar=get_single_row($real_proposal_result);
 		//print_r($ar);
 		if($ar)
@@ -120,7 +120,7 @@ function pg_teacher_array($link)
 
 	$sql='select id,name from user order by name';
 							
-	$result_selected=run_query($link,'research',$sql);
+	$result_selected=run_query($link,$GLOBALS['database'],$sql);
 	
 	$ret=array();
 	while($ar=get_single_row($result_selected))
@@ -235,7 +235,7 @@ now(),
 )';
 
 	//echo $sql;
-	$result=run_query($link,'research',$sql);
+	$result=run_query($link,$GLOBALS['database'],$sql);
     if($result==false)
 	{
 		echo '<h3 style="color:red;">No record inserted</h3>';
@@ -295,7 +295,7 @@ function save_attachement_diss($link,$proposal_id,$type,$blob,$attachment_name)
 					1
 				)';
 		
-	$result=run_query($link,'research',$sql);
+	$result=run_query($link,$GLOBALS['database'],$sql);
 	if($result==false)
 	{
 		echo '<h5 style="color:red;"> nothing updated.too big??</h5>';
