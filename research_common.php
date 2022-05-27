@@ -1416,7 +1416,7 @@ function get_application_data($link)
 			 <tr>
 				   <th>Research on vulnerable subjects</th>
 				   <td>';
-				   mk_select_from_array('research_on_vulnerable_subjects',['no','yes'],'','');
+				   mk_select_from_array('research_on_vulnerable_subjects',$GLOBALS['vulnerable_array'],'','');
 				   echo '</td>';
 				   echo '<td>subjects vulnerable?<a href="https://main.icmr.nic.in/sites/default/files/guidelines/ICMR_Ethical_Guidelines_2017.pdf">ICMR Guideline(See Chapter.6)</a></td>';
 			echo '</tr>
@@ -1667,9 +1667,10 @@ function edit_application($link,$proposal_id,$readonly='')
 					echo '<tr>
 				   <th>Research on vulnerable subjects</th>
 				   <td>';
-				   mk_select_from_array('research_on_vulnerable_subjects',['no','yes'],'',$ar['research_on_vulnerable_subjects']);
+				   mk_select_from_array('research_on_vulnerable_subjects',$GLOBALS['vulnerable_array'],'',$ar['research_on_vulnerable_subjects']);
 				   echo '</td>';
-				   echo '<td>Are study subjects vulnerable? give detailed description of subjects</td>';
+				   echo '<td>subjects vulnerable?<a href="https://main.icmr.nic.in/sites/default/files/guidelines/ICMR_Ethical_Guidelines_2017.pdf">ICMR Guideline(See Chapter.6)</a></td>';
+   echo '<td></td>';
 					echo '</tr>';
 
 					echo '<tr>

@@ -543,10 +543,10 @@ require_once 'research_common.php';
 		}
 						
 			echo '<ul class="nav nav-pills">
-			<li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#dashboard">Dashboard</a></li>
-			<li class="nav-item"><a class="nav-link " data-toggle="pill" href="#applied">Applied</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#assi">Reviewers Assigned (SRC)</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#reviewed">Reviewed (SRC)</a></li>
+			<li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#s_dashboard">Dashboard</a></li>
+			<li class="nav-item"><a class="nav-link " data-toggle="pill" href="#s_applied">Applied</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#s_assi">Reviewers Assigned (SRC)</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#s_reviewed">Reviewed (SRC)</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#sent_to_ecms1">Sent to ECMS1</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#sent_to_ecms2">Sent to ECMS2</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#sent_to_ecms3">Sent to ECMS3</a></li>
@@ -555,13 +555,13 @@ require_once 'research_common.php';
 		
 			<div class="tab-content">';
 		
-			echo '<div class="jumbotron tab-pane container" id=applied>';
+			echo '<div class="jumbotron tab-pane container" id=s_applied>';
 				list_application_status($link,'001.applied','assign_reviewer');
 			echo '</div>';
-			echo '<div class="jumbotron tab-pane container" id=assi>';
+			echo '<div class="jumbotron tab-pane container" id=s_assi>';
 				list_application_status($link,'010.srcm_assigned','assign_reviewer');
 			echo '</div>';
-			echo '<div class="jumbotron tab-pane container" id=reviewed>';
+			echo '<div class="jumbotron tab-pane container" id=s_reviewed>';
 				list_application_status_multiple($link,'020.srcm_approved',['send_to_ecms1','send_to_ecms2','send_to_ecms3']);
 			echo '</div>';
 
@@ -575,7 +575,7 @@ require_once 'research_common.php';
 				list_application_status($link,'033.sent_to_ecms3');
 			echo '</div>';
 
-			echo '<div class="jumbotron tab-pane container  active" id=dashboard>';
+			echo '<div class="jumbotron tab-pane container  active" id=s_dashboard>';
 				if(isset($_POST['action']))
 				{
 					if( $_POST['action']=='display_data')
@@ -592,12 +592,13 @@ require_once 'research_common.php';
 			echo '</div>';//for tab-content
 			
 			echo '</div>';//for srcms collapsible
+/*
 			echo '
 					<form action=today_activity.php method=post target=_blank>
 					<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>
 							<button name=today_activity> Today Activity</button>
 					</form>';
-		
+*/		
 		}
 	
 	if(is_user_type($link,$_SESSION['login'],'ecm1'))
@@ -1045,7 +1046,8 @@ tail();
 //my_print_r($_SERVER);
 
 if(isset($_POST['session_name'])){$post='session_name='.$_POST['session_name'];}else{$post=session_name();}
-if(isset($_SESSION['dsp'])){$dsp='\'#'.$_SESSION['dsp'].'\'';}else{$dsp='';}
+//commented due to multiple roles in srcm and ecm
+//if(isset($_SESSION['dsp'])){$dsp='\'#'.$_SESSION['dsp'].'\'';}else{$dsp='';}
 
 ?>
 
