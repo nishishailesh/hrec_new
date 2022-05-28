@@ -172,7 +172,7 @@ require_once 'research_common.php';
 		/////
 		//2//
 		/////
-		if($_POST['action']=='save_reviewer')
+		if($_POST['action']=='save_srcm_reviewer')
 		{
 			save_srcm_reviewer($link,$_POST);
 		}
@@ -255,7 +255,7 @@ require_once 'research_common.php';
 			$_SESSION['dsp']='ecms';
 		}
 
-		if($_POST['action']=='save_reviewer')
+		if($_POST['action']=='save_reviewer_ecm1')
 		{
 			save_ecm_reviewer($link,$_POST,'041.ecm1_assigned');
 		}
@@ -311,7 +311,7 @@ require_once 'research_common.php';
 			$_SESSION['dsp']='ecms';
 		}
 
-		if($_POST['action']=='save_reviewer')
+		if($_POST['action']=='save_reviewer_ecm2')
 		{
 			save_ecm_reviewer($link,$_POST,'042.ecm2_assigned');
 		}
@@ -367,7 +367,7 @@ require_once 'research_common.php';
 			$_SESSION['dsp']='ecms';
 		}
 
-		if($_POST['action']=='save_reviewer')
+		if($_POST['action']=='save_reviewer_ecm3')
 		{
 			save_ecm_reviewer($link,$_POST,'043.ecm3_assigned');
 		}
@@ -664,7 +664,7 @@ require_once 'research_common.php';
 		{
 		}
 
-		if($_POST['action']=='save_reviewer')
+		if($_POST['action']=='save_reviewer_ecm1')
 		{
 			echo '<div class="jumbotron">';
 	
@@ -746,7 +746,6 @@ require_once 'research_common.php';
 	}
 
 
-	
 	if(is_user_type($link,$_SESSION['login'],'ecm2'))
 	{	
 
@@ -810,7 +809,7 @@ require_once 'research_common.php';
 		{
 		}
 
-		if($_POST['action']=='save_reviewer')
+		if($_POST['action']=='save_reviewer_ecm2')
 		{
 			echo '<div class="jumbotron">';
 	
@@ -892,7 +891,6 @@ require_once 'research_common.php';
 	}
 
 
-	
 	if(is_user_type($link,$_SESSION['login'],'ecm3'))
 	{	
 
@@ -956,7 +954,7 @@ require_once 'research_common.php';
 		{
 		}
 
-		if($_POST['action']=='save_reviewer')
+		if($_POST['action']=='save_reviewer_ecm3')
 		{
 			echo '<div class="jumbotron">';
 	
@@ -967,7 +965,6 @@ require_once 'research_common.php';
 			echo '</div></div>';
 			$_SESSION['dsp']='ecms';
 		}
-		
 		
 		if($_POST['action']=='view')
 		{
@@ -992,8 +989,6 @@ require_once 'research_common.php';
 		 echo '</div>';//for tab-content
 		}
 
-	
-		
 		
 	echo '<ul class="nav nav-pills">
 	        <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#dashboard">Dashboard</a></li>
@@ -1040,15 +1035,15 @@ require_once 'research_common.php';
 //////////////user code ends////////////////
 tail();
 
-//print_r($_POST);
+print_r($_POST);
 //my_print_r($_FILES);
 //my_print_r($_SESSION);
 //my_print_r($_SERVER);
 
 if(isset($_POST['session_name'])){$post='session_name='.$_POST['session_name'];}else{$post=session_name();}
 //commented due to multiple roles in srcm and ecm
-//if(isset($_SESSION['dsp'])){$dsp='\'#'.$_SESSION['dsp'].'\'';}else{$dsp='';}
-
+if(isset($_SESSION['dsp'])){$dsp='\'#'.$_SESSION['dsp'].'\'';}else{$dsp='';}
+$dsp='';
 ?>
 
 <script>

@@ -102,6 +102,6 @@ Others<br>';
 $GLOBALS['upload_button_help']='data can not be saved if ...<br>1)file is not given<br>2)file size is zero <br> 3)Type is not selected ';
 
 
-$GLOBALS['vulnerable_array']=['pregnant woman','children','student','institutionalized person','elderly','person with HIV','person with psychiatric diseases'];
+$GLOBALS['vulnerable_array']=['pregnant woman','children','student','institutionalized person','elderly','person with HIV','person with psychiatric diseases','none of the above'];
 
 ?>

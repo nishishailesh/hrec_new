@@ -1045,7 +1045,7 @@ function get_only_srcm_reviewer($link,$proposal_id)
 	{
 		$ret[]=$ar['reviewer_id'];
 	}
-	//my_print_r($ret);
+	my_print_r($ret);
 	return $ret;
 }
 
@@ -1101,7 +1101,7 @@ function list_srcm_reviewer($link,$proposal_id)
 				<td>'.$ar['type'].'</td>
 		</tr>';
 	}
-	echo '<tr><td colspan="3"><button name=action onclick="return confirm(\'Do you really want to save application?\');"  value=save_reviewer class="btn btn-block btn-success">Save</button></td></tr>';
+	echo '<tr><td colspan="3"><button name=action onclick="return confirm(\'Do you really want to save application?\');"  value=save_srcm_reviewer class="btn btn-block btn-success">Save</button></td></tr>';
 	echo '</table>';	
 	echo '</form>';
 }
@@ -1535,7 +1535,7 @@ function insert_application($link,$aid,$pname,$type,
 	 	
 	 	
 	$result=run_query($link,$GLOBALS['database'],$sql);
-	//echo $sql;
+	echo $sql;
     if($result==false)
 	{
 		echo '<h3 style="color:red;">No record inserted</h3>';
@@ -1944,7 +1944,7 @@ function list_ecm_reviewer($link,$proposal_id,$ecm_string)
 				<td>'.$ar['type'].'</td>
 		</tr>';
 	}
-	echo '<tr><td colspan="3"><button onclick="return confirm(\'Do you really want to save application?\');"  name=action value=save_reviewer class="btn btn-block btn-success">Save</button></td></tr>';
+	echo '<tr><td colspan="3"><button onclick="return confirm(\'Do you really want to save application?\');"  name=action value=\'save_reviewer_'.$ecm_string.'\' class="btn btn-block btn-success">Save</button></td></tr>';
 	echo '</table>';	
 	echo '</form>';
 }
