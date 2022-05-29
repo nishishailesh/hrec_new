@@ -15,7 +15,8 @@ $GLOBALS['required_srcm_reviewer']=1;
 $GLOBALS['required_ecm_reviewer']=1;
 $GLOBALS['recent_activity_refresh_period']=10000;
 $GLOBALS['recent_activity_data_count']=5;
-$GLOBALS['send_email']=1;
+//$GLOBALS['send_email']=1;
+$GLOBALS['send_email']=0;
 $GLOBALS['email_database_server']='11.207.1.2';
 $GLOBALS['proposal_type']=array(
 									'PG Dissertation',

@@ -255,8 +255,8 @@ function list_single_application_with_all_fields($link,$id)
 				<td>
 					<a data-toggle="collapse" href="#xdetail_'.$ar['id'].'">'.$ar['status'].'</a>
 					<div class="collapse" id="xdetail_'.$ar['id'].'">';
-					show_review_status($link,$ar['id']);
-				echo'</div>';
+						show_review_status($link,$ar['id']);
+					echo'</div>';
 				show_forward_proposal_button($link,$id);
 
 				echo '</td>
@@ -835,7 +835,7 @@ function reviewer_assign_email()
 	
 	
 }
-function approve($link,$proposal_id)
+function approve($link,$proposal_id,$who_string)
 {
 	echo '<div class="jumbotron" >';
 	echo '<h3 class="bg-success">Comment and Forward</h3>';
@@ -850,7 +850,7 @@ function approve($link,$proposal_id)
 				echo '<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>';
 				echo '<input type=hidden name=proposal_id value=\''.$proposal_id.'\'>';
 				echo '<textarea class="form-control" name=comment></textarea>';
-				echo '<button  onclick="return confirm(\'Do you really want to approve application?\');" name=action value=approve class="btn btn-primary btn-block">Forward</button>';
+				echo '<button  onclick="return confirm(\'Do you really want to approve application?\');" name=action value=\'approve_'.$who_string.'\' class="btn btn-primary btn-block">Forward</button>';
 			echo '</form>';
 		echo '</div>';
 		
@@ -895,7 +895,7 @@ function save_approve($link,$reviewer_id,$proposal_id,$comment)
 }
 
 
-function view_entire_application($link,$proposal_id)
+function view_entire_application($link,$proposal_id,$who_string)
 {
 	echo '<ul class="nav nav-pills">
 		<li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#application">Application</a></li>
@@ -920,7 +920,7 @@ function view_entire_application($link,$proposal_id)
 			make_comment($link,$proposal_id);
 		echo '</div>';
 		echo '<div class="jumbotron tab-pane container" id=approve>';
-			approve($link,$proposal_id);
+			approve($link,$proposal_id,$who_string);
 		echo '</div>';
 
 	echo '</div>';//for tab-content
@@ -1036,8 +1036,8 @@ function get_only_srcm_reviewer($link,$proposal_id)
 				proposal_id=\''.$proposal_id.'\' and 
 				user.id=decision.reviewer_id and
 				user.id!=\''.$applicant_id.'\' and
-				type REGEXP \'srcm$\' or type REGEXP \'srcm[^s]\'';
-				
+				(type REGEXP \'srcm$\' or type REGEXP \'srcm[^s]\')';
+	//echo $sql;			
 	$result_selected=run_query($link,$GLOBALS['database'],$sql);
 	
 	$ret=array();
@@ -1045,7 +1045,7 @@ function get_only_srcm_reviewer($link,$proposal_id)
 	{
 		$ret[]=$ar['reviewer_id'];
 	}
-	my_print_r($ret);
+	//my_print_r($ret);
 	return $ret;
 }
 
@@ -1913,10 +1913,11 @@ function echo_applicant_info_popup($link,$applicant_id,$proposal_id)
 ///////For EC
 function list_ecm_reviewer($link,$proposal_id,$ecm_string)
 {
+	//echo 'xxxxx';
 	$applicant_id=get_applicant_id($link,$proposal_id);
 	
 	$sql_eligible_reviewer='select * from user where 
-								type REGEXP \''.$ecm_string.'$\' or type REGEXP \''.$ecm_string.'[^s]\'
+								(type REGEXP \''.$ecm_string.'$\' or type REGEXP \''.$ecm_string.'[^s]\')
 								and
 								id!=\''.$applicant_id.'\'';
 	//echo 	$sql_eligible_reviewer;
@@ -1978,7 +1979,7 @@ function get_only_ecm_reviewer($link,$proposal_id)
 				proposal_id=\''.$proposal_id.'\' and 
 				user.id=decision.reviewer_id and
 				user.id!=\''.$applicant_id.'\' and
-				type REGEXP \'ecm$\' or type REGEXP \'ecm[^s]\'';
+				(type REGEXP \'ecm$\' or type REGEXP \'ecm[^s]\')';
 				
 	$result_selected=run_query($link,$GLOBALS['database'],$sql);
 	
@@ -2099,7 +2100,7 @@ function count_selected_ecm_reviewer($link,$proposal_id)
 
 
 
-function view_entire_application_ecm($link,$proposal_id)
+function view_entire_application_ecm($link,$proposal_id,$who_string)
 {
 	echo '<ul class="nav nav-pills">
 		<li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#application">Application</a></li>
@@ -2112,7 +2113,7 @@ function view_entire_application_ecm($link,$proposal_id)
 	echo '<div class="tab-content">';	
 
 		echo '<div class="jumbotron tab-pane container active" id=application>';
-			list_single_application_with_all_fields($link,$proposal_id);
+			list_single_application_with_all_fields($link,$proposal_id,$who_string);
 		echo '</div>';
 		echo '<div class="jumbotron tab-pane container" id=review_status>';
 			show_review_status($link,$proposal_id);
@@ -2124,7 +2125,7 @@ function view_entire_application_ecm($link,$proposal_id)
 			make_comment($link,$proposal_id);
 		echo '</div>';
 		echo '<div class="jumbotron tab-pane container" id=approve>';
-			approve($link,$proposal_id);
+			approve($link,$proposal_id,$who_string,$who_string);
 		echo '</div>';
 
 	echo '</div>';//for tab-content
@@ -2366,7 +2367,7 @@ echo'
 </table>';
 }
 
-function list_application_status_for_ecms_final($link,$status)
+function list_application_status_for_ecms_final($link,$status,$who_string)
 {
 	$sql='select * from proposal where status=\''.$status.'\'';
 	$result=run_query($link,$GLOBALS['database'],$sql);
@@ -2379,8 +2380,8 @@ function list_application_status_for_ecms_final($link,$status)
 				<td>';
 
 					echo '<form method=post>
-						<button class="btn btn-sm btn-block btn-info" name=action value=view >'.$ar['id'].' View</button>
-						<button class="btn btn-sm btn-block btn-info" name=action value=ecms_approve >'.$ar['id'].' Approve</button>
+						<button class="btn btn-sm btn-block btn-info" name=action value=view_'.$who_string.' >'.$ar['id'].' View</button>
+						<button class="btn btn-sm btn-block btn-info" name=action value='.$who_string.'_approve >'.$ar['id'].' Approve</button>
 						<button class="btn btn-sm btn-block btn-info" name=action value=ecms_sent_back >'.$ar['id'].' Send back</button>
 						<input type=hidden name=proposal_id value=\''.$ar['id'].'\'>
 						<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>
