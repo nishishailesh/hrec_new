@@ -55,7 +55,7 @@ function list_application_status($link,$status,$action='none',$message='')
 		//$user_info=get_user_info($link,$ar['applicant_id']);
 		echo '<tr>
 				<td>';
-		
+
 		if($action!='none')
 		{
 					echo '<form method=post>
@@ -67,19 +67,19 @@ function list_application_status($link,$status,$action='none',$message='')
 		else
 		{
 			echo $ar['id'];
-		}			
+		}
 		echo ' </td>';
-		
+
 		echo '<td>';
 			echo_applicant_info_popup($link,get_applicant_id($link,$ar['id']),$ar['id']);
 		echo '</td>';
-		
-				//<td><span class="text-primary">'.$ar['applicant_id'].'</span>/<span class="text-danger">'.$user_info['name'].'</span>/<span class="text-primary">'.$user_info['department'].'</span></td>
+
+		$rid=rand(10,100);
 		echo '<td>'.$ar['proposal_name'].'</td>
 				<td>'.$ar['date_time'].'</td>
 				<td>
-				<a data-toggle="collapse" href="#detail_'.$ar['id'].'">'.$ar['status'].'</a>
-				<div class="collapse" id="detail_'.$ar['id'].'">';
+				<a data-toggle="collapse" href="#detail_'.$ar['id'].'_'.$rid.'">'.$ar['status'].'</a>
+				<div class="collapse" id="detail_'.$ar['id'].'_'.$rid.'">';
 				show_review_status($link,$ar['id']);
 				echo'</div></td>
 		</tr>';
@@ -123,11 +123,15 @@ function list_application_status_multiple($link,$status,$action=array('none'))
 		echo '</td>';
 		
 				//<td><span class="text-primary">'.$ar['applicant_id'].'</span>/<span class="text-danger">'.$user_info['name'].'</span>/<span class="text-primary">'.$user_info['department'].'</span></td>
+		$rid=rand(10,100);
 		echo '<td>'.$ar['proposal_name'].'</td>
 				<td>'.$ar['date_time'].'</td>
 				<td>
-				<a data-toggle="collapse" href="#detail_'.$ar['id'].'">'.$ar['status'].'</a>
-				<div class="collapse" id="detail_'.$ar['id'].'">';
+		                <a data-toggle="collapse" href="#detail_'.$ar['id'].'_'.$rid.'">'.$ar['status'].'</a>
+                                <div class="collapse" id="detail_'.$ar['id'].'_'.$rid.'">';
+
+				//<a data-toggle="collapse" href="#detail_'.$ar['id'].'">'.$ar['status'].'</a>
+				//<div class="collapse" id="detail_'.$ar['id'].'">';
 				show_review_status($link,$ar['id']);
 				echo'</div></td>
 		</tr>';
@@ -707,8 +711,8 @@ function save_comment($link,$reviewer_id,$proposal_id,$comment,$attachment='',$a
 	<h4>Comment:<br>';
 	$comment1='<h4>'.nl2br(htmlspecialchars($comment)).'</h4>';
 
-	$final_comment=$pre_comment.$comment1.'<a href="http://gmcsurat.edu.in:12347/hrec">REC Login from Internet</a><br>
-	 <a href="http://11.207.1.2/hrec/">REC Login from College Network</a></h4>';
+	$final_comment=$pre_comment.$comment1.'<a href="http://gmcsurat.edu.in:12350/hrec_new">REC Login from Internet</a><br>
+	 <a href="http://11.207.1.2/hrec_new/">REC Login from College Network</a></h4>';
 	
 	send_all_emails($link,$proposal_id,$final_comment);
 }
@@ -745,8 +749,8 @@ function save_comment_for_reviewer_assignment($link,$reviewer_id,$proposal_id)
 	<h2><b>	Proposal Name:- <u style=\'color: darkcyan;font-family: arial, sans-serif;font-size: 20px;font-weight: bold;\'>'.$proposal_data['proposal_name'].'</u></b></h2>
 	<h3 style=\'font-family: arial, sans-serif;font-size: 20px;font-weight: bold;\'><b>Comment made by:- <u style=\'color: darkviolet;font-family: arial, sans-serif;font-size: 20px;font-weight: bold;\'>'.$reviewer_data['name'].'</u></b></h3>
 	<h4>Following is content of Comment.<br>(for details login to HREC application on following link)<br>
-	 <a href="http://gmcsurat.edu.in:12347/hrec">REC Login from Internet</a><br>
-	 <a href="http://11.207.1.2/hrec/">REC Login from College Network</a></h4>';
+	 <a href="http://gmcsurat.edu.in:12350/hrec_new">REC Login from Internet</a><br>
+	 <a href="http://11.207.1.2/hrec_new/">REC Login from College Network</a></h4>';
 	$comment1='<h4>'.nl2br(htmlspecialchars($comment)).'</h4>';
 
 	$final_comment=$pre_comment.$comment1;
@@ -1566,8 +1570,8 @@ Login frequently and view emails to be up-to-date about this application';
 	<h4>AUTO-GENERATED COMMENT<br>
 New proposal with unique Proposal Id:- <u style=\'color: green;font-family: arial, sans-serif;font-weight: bold;\'>'.$new_proposal_id.' </u>  and Proposal Name:- <u style=\'color: #800080;font-family: arial, sans-serif;font-weight: bold;\'>'.$pname.'</u> has arrived.<br>
 assign reviewers as early as possible.</h4>
-     <a href="http://gmcsurat.edu.in:12347/hrec">REC Login from Internet</a><br>
-	 <a href="http://11.207.1.2/hrec/">REC Login from College Network</a></h4>';
+     <a href="http://gmcsurat.edu.in:12350/hrec_new">REC Login from Internet</a><br>
+	 <a href="http://11.207.1.2/hrec_new/">REC Login from College Network</a></h4>';
 //echo $srcms_comment;
 	while($ar=get_single_row($result))
 	{
@@ -1591,8 +1595,8 @@ function save_email_for_send_to_ecms($link,$proposal_id)
 	<h4>AUTO-GENERATED COMMENT<br>
 Proposal with unique Proposal Id:- <u style=\'color: green;font-family: arial, sans-serif;font-weight: bold;\'>'.$proposal_id.' </u>  and Proposal Name:- <u style=\'color: #800080;font-family: arial, sans-serif;font-weight: bold;\'>'.$pinfo['proposal_name'].'</u> has arrived.<br>
 assign EC reviewers as early as possible.</h4>
-     <a href="http://gmcsurat.edu.in:12347/hrec">REC Login from Internet</a><br>
-	 <a href="http://11.207.1.2/hrec/">REC Login from College Network</a></h4>';
+     <a href="http://gmcsurat.edu.in:12350/hrec_new">REC Login from Internet</a><br>
+	 <a href="http://11.207.1.2/hrec_new/">REC Login from College Network</a></h4>';
 //echo $srcms_comment;
 	while($ar=get_single_row($result))
 	{

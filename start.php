@@ -1037,7 +1037,7 @@ require_once 'research_common.php';
 //////////////user code ends////////////////
 tail();
 
-print_r($_POST);
+//print_r($_POST);
 //my_print_r($_FILES);
 //my_print_r($_SESSION);
 //my_print_r($_SERVER);
