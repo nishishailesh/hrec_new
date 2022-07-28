@@ -614,9 +614,10 @@ function make_comment($link,$proposal_id)
 		echo '<div class="border border-secondary" >';
 		$ri=get_user_info($link,$_SESSION['login']);
 		//my_print_r($ri);
-			echo '	<h3 class="d-inline"><span class="badge badge-primary ">'.$ri['name'].'</span></h3>
+			if($ri)
+			{echo '	<h3 class="d-inline"><span class="badge badge-primary ">'.$ri['name'].'</span></h3>
 			<h4 class="d-inline"><span class="badge badge-secondary">'.$ri['department'].'</span></h4>
-			<h5 class="d-inline"><span class="badge badge-info rounded-circle">'.$ri['type'].'</span></h5>';
+			<h5 class="d-inline"><span class="badge badge-info rounded-circle">'.$ri['type'].'</span></h5>';}
 			echo '<form method=post enctype="multipart/form-data">';
 				echo '<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>';
 				echo '<input type=hidden name=proposal_id value=\''.$proposal_id.'\'>';
