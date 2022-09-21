@@ -49,7 +49,7 @@ CREATE TABLE `attachment` (
   PRIMARY KEY (`id`),
   KEY `proposal_id` (`proposal_id`),
   CONSTRAINT `attachment_ibfk_1` FOREIGN KEY (`proposal_id`) REFERENCES `proposal` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8301 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8685 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `comment` (
   KEY `proposal_id` (`proposal_id`,`reviewer_id`),
   KEY `reviewer_id` (`reviewer_id`),
   CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`proposal_id`, `reviewer_id`) REFERENCES `decision` (`proposal_id`, `reviewer_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14830 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15355 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,7 +136,7 @@ CREATE TABLE `proposal` (
   `proposal_name` varchar(500) NOT NULL,
   `type` varchar(20) NOT NULL,
   `interventional_research` varchar(20) DEFAULT NULL,
-  `research_on_vulnerable_subjects` varchar(20) DEFAULT NULL,
+  `research_on_vulnerable_subjects` varchar(200) DEFAULT NULL,
   `description_of_study_subjects` varchar(1000) DEFAULT NULL,
   `additional_remarks` varchar(500) DEFAULT NULL,
   `date_time` datetime DEFAULT NULL,
@@ -151,7 +151,7 @@ CREATE TABLE `proposal` (
   PRIMARY KEY (`id`),
   KEY `applicant_id` (`applicant_id`),
   CONSTRAINT `proposal_ibfk_1` FOREIGN KEY (`applicant_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=591 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=661 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -242,4 +242,4 @@ CREATE TABLE `view_info_data1` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-28 22:50:09
+-- Dump completed on 2022-09-21 11:10:11

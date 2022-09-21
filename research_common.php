@@ -246,16 +246,19 @@ function list_single_application_with_all_fields($link,$id)
 						echo_applicant_info_popup($link,$ar['applicant_id'],$id);
 				echo '</td>
 				<td>'.$ar['proposal_name'].'</td>
-				<td>'.$ar['type'].'<br>Intervantional:'.
-				$ar['interventional_research'].'<br>Vulnerable:'.
-				$ar['research_on_vulnerable_subjects'].'<br>Subject details:'.
-				$ar['description_of_study_subjects'].'<br>Remarks:'.
-				$ar['additional_remarks'].'
-				<td>'.$ar['guide'].'<br>
-				'.$ar['researcher_email_id'].'<br>
-				'.$ar['researcher_mobile_no'].'</td>
-				<td>'.$ar['date_time'].'</td>
-				
+				<td>
+					<table class="table table-sm table-striped">
+					<tr><td>Type</td><td>'.$ar['type'].'</td><tr>
+					<tr><td>Interventional Research</td><td>'.$ar['interventional_research'].'</td><tr>
+					<tr><td>Research on Vulnerable subjects</td><td>'.$ar['research_on_vulnerable_subjects'].'</td><tr>
+					<tr><td>Description of Study Subjects</td><td>'.$ar['description_of_study_subjects'].'</td><tr>
+					<tr><td>Additional Remarks</td><td>'.$ar['additional_remarks'].'</td><tr>
+					</table>
+					<td>'.$ar['guide'].'<br>
+					'.$ar['researcher_email_id'].'<br>
+					'.$ar['researcher_mobile_no'].'</td>
+					<td>'.$ar['date_time'].'</td>
+
 				<td>
 					<a data-toggle="collapse" href="#xdetail_'.$ar['id'].'">'.$ar['status'].'</a>
 					<div class="collapse" id="xdetail_'.$ar['id'].'">';

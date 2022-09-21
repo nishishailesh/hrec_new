@@ -156,7 +156,15 @@ function get_application_data_diss($link)
 					<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>
 				   <input type=hidden name=applicant_id value=\''.$_SESSION['login'].'\'>
 	      <table class="table table-striped" width="50%"> 
-	      <tr><th class="text-success rounded-top">New Proposal</th></tr>              
+	      <tr><th class="text-success rounded-top"><span class="badge badge-warning"><h3>New Proposal<h3></span></th></tr>              
+
+                        <tr><th class="text-danger" colspan=10>Note: Documents can be uploaded after saving the application</th></tr>
+                        <tr><th class="text-danger" colspan=10><span class="badge badge-danger"><h4>Important Note:</h4></span> <span class="text-success">details of Interventional Research </span>MUST be added after saving the application</th></t>
+                        <tr><th class="text-danger" colspan=10><span class="badge badge-danger"><h4>Important Note:</h4></span> <span class="text-success">details of Research on vulnerable subjects</span> MUST be added after saving the application</th></tr>
+                        <tr><th class="text-danger" colspan=10>Note: Description of study subjects can be added after saving the application</th></tr>
+                        <tr><th class="text-danger" colspan=10>Note: Additional Remarks can be added after saving the application</th></tr>
+
+
 			<tr>
 				   <th>Name of PG student</th>
 				   <td><input name=pg_student_name class="form-control"  placeholder="Enter PG Student Name"></td>				  
@@ -198,7 +206,7 @@ function get_application_data_diss($link)
 							value=insert_application>Save</button>
 					</td>
 			</tr>
-			<tr><th class="text-danger" colspan=10>Note: Documents can be uploaded after saving the application</th></tr>
+
 			</table>
 		</form>';
 }
