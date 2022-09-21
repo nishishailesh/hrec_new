@@ -66,16 +66,19 @@ require_once 'research_common.php';
 	    
 	    if($_POST['action']=='insert_application')
         {
-			insert_application($link,
+			if($new_proposal_id=insert_application($link,
 						$_POST['applicant_id'],$_POST['proposal_name'],$_POST['type'],
 						$_POST['interventional_research'],
 						$_POST['research_on_vulnerable_subjects'],
 						$_POST['description_of_study_subjects'],
 						$_POST['additional_remarks'],
-						$_POST['guide'],$_POST['emailid'],$_POST['mobileno'],$_POST['year'],$_POST['dept_type']);
+						$_POST['guide'],$_POST['emailid'],$_POST['mobileno'],$_POST['year'],$_POST['dept_type']))
+						{
+							view_entire_application_for_applicant($link,$new_proposal_id);							
+						}
 			$_SESSION['dsp']='researcher';
+			
 	    }
-
 
 	    if($_POST['action']=='update_application')
         {
@@ -105,7 +108,8 @@ require_once 'research_common.php';
 			$_SESSION['dsp']='researcher';
 			
 	    }
-	    	    
+	    
+	    //not implemented	    
 		if($_POST['action']=='delete_appication')
         	{
 				delete($link,$GLOBALS['database'],$_POST['table'],$_POST['primary_key'],$_POST['primary_key_value']);
@@ -211,6 +215,7 @@ require_once 'research_common.php';
 
 	}
 
+
 	if(is_user_type($link,$_SESSION['login'],'ecm1'))
 	{	
 		if($_POST['action']=='approve_ecm1')
@@ -267,6 +272,7 @@ require_once 'research_common.php';
 
 	}
 
+
 	if(is_user_type($link,$_SESSION['login'],'ecm2'))
 	{	
 		if($_POST['action']=='approve_ecm2')
@@ -322,6 +328,7 @@ require_once 'research_common.php';
 		}
 
 	}
+
 
 	if(is_user_type($link,$_SESSION['login'],'ecm3'))
 	{	
@@ -390,8 +397,8 @@ require_once 'research_common.php';
 		
 		if($_POST['action']=='manage_application')
         {	
-			view_entire_application_for_applicant($link,$_POST['proposal_id']);
-			
+			//view_entire_application_for_applicant($link,$_POST['proposal_id']);
+			//default, see below
 			$_SESSION['dsp']='researcher';
 		}
 			
@@ -418,6 +425,7 @@ require_once 'research_common.php';
            // save_application_field($link,$_POST['id'],'year',$_POST['year']); 
 			//save_application_field($link,$_POST['id'],'Department',$_POST['dept_type']); 
 			view_entire_application_for_applicant($link,$_POST['id']);
+			//see below
 			$_SESSION['dsp']='researcher';
 	    }
 
@@ -426,17 +434,23 @@ require_once 'research_common.php';
 			//status($link,$_POST['proposal_id']);
 			//$blob=file_to_str($link,$_FILES['attachment']);
 			//save_attachement($link,$_POST['proposal_id'],$_POST['type'],$blob,$_FILES['attachment']['name']);		
-			view_entire_application_for_applicant($link,$_POST['proposal_id']);
+			//view_entire_application_for_applicant($link,$_POST['proposal_id']);
+			//see below
 			$_SESSION['dsp']='researcher';
 			
 	    }
-	    	    
+	    
+	    //no such activity   
 		if($_POST['action']=='delete_appication')
         	{
 				//delete($link,$GLOBALS['database'],$_POST['table'],$_POST['primary_key'],$_POST['primary_key_value']);
 				//$_SESSION['dsp']='researcher';
 			}
        
+       if(isset($_POST['proposal_id']))
+       {
+			view_entire_application_for_applicant($link,$_POST['proposal_id']);		   
+	   }
        list_researcher_application($link);
 	
 		echo '</div><div></div>'; //for researcher collapse
@@ -550,9 +564,8 @@ require_once 'research_common.php';
 			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#sent_to_ecms1">Sent to ECMS1</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#sent_to_ecms2">Sent to ECMS2</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#sent_to_ecms3">Sent to ECMS3</a></li>
-			
 			</ul>
-		
+
 			<div class="tab-content">';
 		
 			echo '<div class="jumbotron tab-pane container" id=s_applied>';
@@ -1037,19 +1050,59 @@ require_once 'research_common.php';
 //////////////user code ends////////////////
 tail();
 
-//print_r($_POST);
+print_r($_POST);
 //my_print_r($_FILES);
 //my_print_r($_SESSION);
 //my_print_r($_SERVER);
 
 if(isset($_POST['session_name'])){$post='session_name='.$_POST['session_name'];}else{$post=session_name();}
 //commented due to multiple roles in srcm and ecm
-if(isset($_SESSION['dsp'])){$dsp='\'#'.$_SESSION['dsp'].'\'';}else{$dsp='';}
-$dsp='';
+//if(isset($_SESSION['dsp'])){$dsp='\'#'.$_SESSION['dsp'].'\'';}else{$dsp='';}
+//$dsp='';
+
+$focus=array(
+'new_application'=>['get_application_data','researcher'],
+'insert_application'=>['researcher'],
+'manage_application'=>['researcher'],
+'update_application'=>['researcher'],
+'upload_attachment'=>['researcher'],
+'save_comment'=>['researcher'],
+);
+
+$focuss=array(
+'update_application'=>['application_tab'],
+'upload_attachment'=>['application_tab'],
+'save_comment'=>['comment_tab']
+
+);
+
+/*
+if(isset($focus[$_POST['action']]))
+{
+	echo '<script>';
+	foreach ($focus[$_POST['action']] as $id)
+	{
+		echo '$("#'.$id.'").collapse("show");';
+	}
+	echo '</script>';
+}
+
+if(isset($focuss[$_POST['action']]))
+{
+	echo '<script>';
+	foreach ($focuss[$_POST['action']] as $id)
+	{
+		//echo '$("#'.$id.'").tab("active");';
+		echo '$("#'.$id.'").tab("show");';
+	}
+	echo '</script>';
+}
+*/
+
 ?>
 
 <script>
-
+/*
 jQuery(document).ready(
 	function() 
 	{
@@ -1057,6 +1110,7 @@ jQuery(document).ready(
 		start();
 	}
 );
+*/
 
 function start()
 {

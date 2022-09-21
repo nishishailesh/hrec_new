@@ -1,6 +1,6 @@
 -- MariaDB dump 10.19  Distrib 10.5.15-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: 127.0.0.1    Database: hrec_new
+-- Host: localhost    Database: research
 -- ------------------------------------------------------
 -- Server version	10.5.15-MariaDB-0+deb11u1
 
@@ -49,7 +49,7 @@ CREATE TABLE `attachment` (
   PRIMARY KEY (`id`),
   KEY `proposal_id` (`proposal_id`),
   CONSTRAINT `attachment_ibfk_1` FOREIGN KEY (`proposal_id`) REFERENCES `proposal` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8265 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8255 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `comment` (
   KEY `proposal_id` (`proposal_id`,`reviewer_id`),
   KEY `reviewer_id` (`reviewer_id`),
   CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`proposal_id`, `reviewer_id`) REFERENCES `decision` (`proposal_id`, `reviewer_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14780 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14750 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,8 +142,8 @@ CREATE TABLE `proposal` (
   `date_time` datetime DEFAULT NULL,
   `guide` varchar(50) DEFAULT NULL,
   `researcher_email_id` varchar(100) DEFAULT NULL,
-  `researcher_mobile_no` varchar(30) DEFAULT NULL,
-  `year` varchar(4) DEFAULT NULL,
+  `researcher_mobile_no` bigint(15) DEFAULT NULL,
+  `year` int(5) DEFAULT NULL,
   `Department` varchar(25) DEFAULT NULL,
   `status` enum('001.applied','010.srcm_assigned','020.srcm_approved','031.sent_to_ecms1','041.ecm1_assigned','061.sent_to_committee1','071.ecms1_approved','032.sent_to_ecms2','042.ecm2_assigned','062.sent_to_committee2','072.ecms2_approved','033.sent_to_ecms3','043.ecm3_assigned','063.sent_to_committee3','073.ecms3_approved') DEFAULT NULL,
   `status2` enum('001.applied','010.srcm_assigned','020.srcm_approved','030.sent_to_ecms','040.ecm_assigned','060.sent_to_committee','070.ecms_approved') DEFAULT NULL,
@@ -151,7 +151,7 @@ CREATE TABLE `proposal` (
   PRIMARY KEY (`id`),
   KEY `applicant_id` (`applicant_id`),
   CONSTRAINT `proposal_ibfk_1` FOREIGN KEY (`applicant_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=590 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=582 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -242,4 +242,4 @@ CREATE TABLE `view_info_data1` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-21 18:05:53
+-- Dump completed on 2022-05-20 17:49:33
