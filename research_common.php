@@ -139,7 +139,7 @@ function list_application_status_multiple($link,$status,$action=array('none'))
 	echo '</table>';
 }
 
-function list_application_for_reviewer($link,$status,$action='none',$reviewer_id)
+function list_application_for_reviewer($link,$status,$action='none',$reviewer_id,$who_string='r')
 {
 	
 	$sql='select * from proposal,decision where 
@@ -166,8 +166,12 @@ function list_application_for_reviewer($link,$status,$action='none',$reviewer_id
 		if($action!='none')
 		{
 					echo '<form method=post>
-						<button  onclick="return confirm(\'Do you really want to view this application?\');" class="btn btn-sm btn-block btn-info" name=action value=\''.$action.'\' >'.$ar['id'].'</button>
+						<button  onclick="return confirm(\'Do you really want to view this application?\');" 
+						class="btn btn-sm btn-block btn-info" 
+						name=action 
+						value=\''.$action.'_'.$who_string.'\' >'.$ar['id'].'</button>
 						<input type=hidden name=proposal_id value=\''.$ar['id'].'\'>
+						<input type=hidden name=focus value='.$who_string.'>
 						<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>
 					</form>';
 		}
@@ -599,7 +603,7 @@ function display_comment($link,$proposal_id)
 	echo '</div>';
 }
 
-function make_comment($link,$proposal_id)
+function make_comment($link,$proposal_id,$who_string)
 {
 	$status=get_application_status($link,$proposal_id);
     if($status=="070.ecms_approved")
@@ -623,7 +627,8 @@ function make_comment($link,$proposal_id)
 			<h5 class="d-inline"><span class="badge badge-info rounded-circle">'.$ri['type'].'</span></h5>';}
 			echo '<form method=post enctype="multipart/form-data">';
 				echo '<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>';
-				echo '<input type=hidden name=proposal_id value=\''.$proposal_id.'\'>';
+				echo '<input type=hidden name=proposal_id value=\''.$proposal_id.'\'>
+				<input type=hidden name=focus value='.$who_string.'>';
 				echo '<textarea rows=20 class="form-control "  name=comment>
 1.Reviewer:-
 2.Permissions:-
@@ -906,28 +911,28 @@ function save_approve($link,$reviewer_id,$proposal_id,$comment)
 function view_entire_application($link,$proposal_id,$who_string)
 {
 	echo '<ul class="nav nav-pills">
-		<li class="nav-item"><a id="application_tab" 		class="nav-link active" data-toggle="pill" href="#application">Application</a></li>
-		<li class="nav-item"><a id="review_status_tab" 	class="nav-link" data-toggle="pill" href="#review_status">Review Status</a></li>
-		<li class="nav-item"><a id="comment_tab" 			class="nav-link" data-toggle="pill" href="#comment">Comments (SRC)</a></li>
-		<li class="nav-item"><a id="make_comment_tab" 	class="nav-link" data-toggle="pill" href="#make_comment">Make Comment (SRC)</a></li>
-		<li class="nav-item"><a id="approve_tab" 			class="nav-link" data-toggle="pill" href="#approve">Approve Application (SRC)</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_application_tab" 	class="nav-link active" data-toggle="pill" href="#'.$who_string.'_application">Application</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_review_status_tab" 	class="nav-link" data-toggle="pill" href="#'.$who_string.'_review_status">Review Status</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_comment_tab" 		class="nav-link" data-toggle="pill" href="#'.$who_string.'_comment">Comments (SRC)</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_make_comment_tab" 	class="nav-link" data-toggle="pill" href="#'.$who_string.'_make_comment">Make Comment (SRC)</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_approve_tab" 		class="nav-link" data-toggle="pill" href="#'.$who_string.'_approve">Approve Application (SRC)</a></li>
 	</ul>';
 	
 	echo '<div class="tab-content">';	
 
-		echo '<div class="jumbotron tab-pane container active" id=application>';
+		echo '<div class="jumbotron tab-pane container active" id='.$who_string.'_application>';
 			list_single_application_with_all_fields($link,$proposal_id);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id=review_status>';
+		echo '<div class="jumbotron tab-pane container" id='.$who_string.'_review_status>';
 			show_review_status($link,$proposal_id);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id=comment>';
+		echo '<div class="jumbotron tab-pane container" id='.$who_string.'_comment>';
 			display_comment($link,$proposal_id);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id=make_comment>';
-			make_comment($link,$proposal_id);
+		echo '<div class="jumbotron tab-pane container" id='.$who_string.'_make_comment>';
+			make_comment($link,$proposal_id,$who_string,'s');
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id=approve>';
+		echo '<div class="jumbotron tab-pane container" id='.$who_string.'_approve>';
 			approve($link,$proposal_id,$who_string);
 		echo '</div>';
 
@@ -940,34 +945,34 @@ function view_entire_application($link,$proposal_id,$who_string)
 function view_entire_application_for_applicant($link,$proposal_id)
 {
 	echo '<ul class="nav nav-pills">
-		<li class="nav-item" ><a class="nav-link active" 	id=application_tab 		data-toggle="pill" href="#application">Application</a></li>
-		<li class="nav-item" ><a class="nav-link" 			id=edit_tab 			data-toggle="pill" href="#edit">Edit</a></li>
-		<li class="nav-item" ><a class="nav-link" 			id=upload_tab			data-toggle="pill" href="#upload">Upload</a></li>
-		<li class="nav-item" ><a class="nav-link" 			id=review_status_tab 	data-toggle="pill" href="#review_status">Review Status</a></li>
-		<li class="nav-item" ><a class="nav-link" 			id=comment_tab			data-toggle="pill" href="#comment">Comments</a></li>
-		<li class="nav-item" ><a class="nav-link" 			id=make_comment_tab		data-toggle="pill" href="#make_comment">Make Comment</a></li>
+		<li class="nav-item" ><a class="nav-link active" 	id=r_application_tab 		data-toggle="pill" href="#r_application">Application</a></li>
+		<li class="nav-item" ><a class="nav-link" 			id=r_edit_tab 			data-toggle="pill" href="#r_edit">Edit</a></li>
+		<li class="nav-item" ><a class="nav-link" 			id=r_upload_tab			data-toggle="pill" href="#r_upload">Upload</a></li>
+		<li class="nav-item" ><a class="nav-link" 			id=r_review_status_tab 	data-toggle="pill" href="#r_review_status">Review Status</a></li>
+		<li class="nav-item" ><a class="nav-link" 			id=r_comment_tab			data-toggle="pill" href="#r_comment">Comments</a></li>
+		<li class="nav-item" ><a class="nav-link" 			id=r_make_comment_tab		data-toggle="pill" href="#r_make_comment">Make Comment</a></li>
 	</ul>';
 	
 	echo '<div class="tab-content">';	
 
-		echo '<div class="jumbotron tab-pane container active" id=application>';
+		echo '<div class="jumbotron tab-pane container active" id=r_application>';
 			list_single_application_with_all_fields($link,$proposal_id);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id="edit">';
+		echo '<div class="jumbotron tab-pane container" id="r_edit">';
 		   
 			edit_application($link,$proposal_id,'yes');
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id=upload>';
+		echo '<div class="jumbotron tab-pane container" id=r_upload>';
 			upload_attachment($link,$proposal_id);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id=review_status>';
+		echo '<div class="jumbotron tab-pane container" id=r_review_status>';
 			show_review_status($link,$proposal_id);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id=comment>';
+		echo '<div class="jumbotron tab-pane container" id=r_comment>';
 			display_comment($link,$proposal_id);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id=make_comment>';
-			make_comment($link,$proposal_id);
+		echo '<div class="jumbotron tab-pane container" id=r_make_comment>';
+			make_comment($link,$proposal_id,'r');
 		echo '</div>';
 	echo '</div>';//for tab-content
 	
@@ -1304,6 +1309,17 @@ current reviewers are as follows:
 
 }
 
+function get_researcher_application_id_array($link)
+{        
+	$result=run_query($link,$GLOBALS['database'],'select id from proposal where applicant_id=\''.$_SESSION['login'].'\'');
+	$ret=array();
+	while($ar=get_single_row($result))
+	{
+		$ret[]=$ar['id'];
+	}
+	return $ret;
+}
+
 
 function list_researcher_application($link)
 {        echo'<form method=post>
@@ -1311,6 +1327,7 @@ function list_researcher_application($link)
 		            <input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>
 		             <input type=hidden name=table value="proposal">
 			        <input type=hidden name=field value="application" >
+			        <input type=hidden name=focus value="r" >
 			        <input type=hidden name=applicantid value=\''.$_SESSION['login'].'\'>
 			        <button class="btn btn-primary"  onclick="return confirm(\'Do you really want to new application?\');" 
 						type=submit
@@ -1340,6 +1357,7 @@ function list_researcher_application($link)
 			   	<td>
 					<form method=post>
 						<button  class="btn btn-sm btn-block btn-info" value=manage_application name=action>'.$ar['id'].'</button>
+						<input type=hidden name=focus value=r>
 						<input type=hidden name=proposal_id value=\''.$ar['id'].'\'>
 						<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>
 					</form>
@@ -1482,6 +1500,7 @@ function get_application_data($link)
 							type=submit
 							name=action
 							value=insert_application>Save</button>
+							<input type=hidden name=focus value="r" >
 					</td>
 			</tr>
 			<tr><th class="text-danger" colspan=10>Note: Documents can be uploaded after saving the application</th></tr>
@@ -1737,7 +1756,9 @@ function edit_application($link,$proposal_id,$readonly='')
 						echo'	<button onclick="return confirm(\'Do you really want to Update application?\');" class="btn btn-primary"  
 								type=submit
 								name=action
-								value=update_application>Update</button>';
+								value=update_application>Update</button>
+								<input type=hidden name=focus value=r>';
+
 						//}
 						//else{
 						//	status($link,$proposal_id);
@@ -1749,7 +1770,6 @@ function edit_application($link,$proposal_id,$readonly='')
 		</form>';
 	}
 	}
-	
 }
 
 function save_application_field($link,$aid,$field,$value)
@@ -1786,6 +1806,7 @@ function upload_attachment($link,$proposal_id)
 					   <input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>
 					   <input type=hidden name=applicantid value=\''.$_SESSION['login'].'\'>
 					   <input type=hidden name=proposal_id value=\''.$proposal_id.'\'>
+					   <input type=hidden name=focus value=r>
 				<table class="table table-striped">
 					<tr>	 
 					   <th>File to upload</th>
@@ -2114,28 +2135,28 @@ function count_selected_ecm_reviewer($link,$proposal_id)
 function view_entire_application_ecm($link,$proposal_id,$who_string)
 {
 	echo '<ul class="nav nav-pills">
-		<li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#application">Application</a></li>
-		<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#review_status">Review Status</a></li>
-		<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#comment">Comments (ECM)</a></li>
-		<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#make_comment">Make Comment (ECM)</a></li>
-		<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#approve">Forward To EC</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_application_tab" class="nav-link active" data-toggle="pill" href="#"'.$who_string.'_application">Application</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_review_status_tab"  class="nav-link" data-toggle="pill" 	href="#"'.$who_string.'_review_status">Review Status</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_comment_tab" class="nav-link" data-toggle="pill" 			href="#"'.$who_string.'_comment">Comments (ECM)</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_make_comment_tab"  class="nav-link" data-toggle="pill" 		href="#"'.$who_string.'_make_comment">Make Comment (ECM)</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_approve_tab" class="nav-link" data-toggle="pill" 			href="#"'.$who_string.'_approve">Forward To EC</a></li>
 	</ul>';
 	
 	echo '<div class="tab-content">';	
 
-		echo '<div class="jumbotron tab-pane container active" id=application>';
+		echo '<div class="jumbotron tab-pane container active" id="'.$who_string.'_application>';
 			list_single_application_with_all_fields($link,$proposal_id,$who_string);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id=review_status>';
+		echo '<div class="jumbotron tab-pane container" id="'.$who_string.'_review_status>';
 			show_review_status($link,$proposal_id);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id=comment>';
+		echo '<div class="jumbotron tab-pane container" id="'.$who_string.'_comment>';
 			display_comment($link,$proposal_id);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id=make_comment>';
-			make_comment($link,$proposal_id);
+		echo '<div class="jumbotron tab-pane container" id="'.$who_string.'_make_comment>';
+			make_comment($link,$proposal_id,$who_string);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id=approve>';
+		echo '<div class="jumbotron tab-pane container" id="'.$who_string.'_approve>';
 			approve($link,$proposal_id,$who_string,$who_string);
 		echo '</div>';
 

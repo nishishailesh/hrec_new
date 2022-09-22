@@ -447,13 +447,59 @@ require_once 'research_common.php';
 				//$_SESSION['dsp']='researcher';
 			}
        
-       if(isset($_POST['proposal_id']))
+       if(isset($_POST['proposal_id']) && in_array($_POST['proposal_id'],get_researcher_application_id_array($link)))
        {
-			view_entire_application_for_applicant($link,$_POST['proposal_id']);		   
+			view_entire_application_for_applicant($link,$_POST['proposal_id']);   
 	   }
+	   
        list_researcher_application($link);
 	
 		echo '</div><div></div>'; //for researcher collapse
+		
+		if(isset($_POST['focus']))
+		{
+			if($_POST['focus']=='r')
+			{
+				//////for focus of appropriate section//////
+				$focus=array(
+								'new_application'=>['get_application_data','researcher'],
+								'insert_application'=>['researcher'],
+								'manage_application'=>['researcher'],
+								'update_application'=>['researcher'],
+								'upload_attachment'=>['researcher'],
+								'save_comment'=>['researcher']
+							);
+
+				$focuss=array(
+								'update_application'=>['r_application_tab'],
+								'upload_attachment'=>['r_application_tab'],
+								'save_comment'=>['r_comment_tab']
+							);
+							
+				if(isset($focus[$_POST['action']]))
+				{
+					echo '<script>';
+					foreach ($focus[$_POST['action']] as $id)
+					{
+						echo '$("#'.$id.'").collapse("show");';
+					}
+					echo '</script>';
+				}
+
+				if(isset($focuss[$_POST['action']]))
+				{
+					echo '<script>';
+					foreach ($focuss[$_POST['action']] as $id)
+					{
+						//echo '$("#'.$id.'").tab("active");';
+						echo '$("#'.$id.'").tab("show");';
+					}
+					echo '</script>';
+				}
+			}
+		}
+		//////for focus of appropriate section//////
+		
 	}
 
 	if(is_user_type($link,$_SESSION['login'],'srcm'))
@@ -466,7 +512,6 @@ require_once 'research_common.php';
 
 		echo '<div class=collapse id=srcm>';
 		
-
 			
 		/////
 		//4//
@@ -482,7 +527,7 @@ require_once 'research_common.php';
 		}	
 						
 		//if($_POST['action']=='view_application' || $_POST['action']=='save_comment' ||$_POST['action']=='approve')
-		if($_POST['action']=='view_application' ||$_POST['action']=='approve')
+		if($_POST['action']=='view_application_s' ||$_POST['action']=='approve')
 		{
 			view_entire_application($link,$_POST['proposal_id'],$who_string='s');
 			$_SESSION['dsp']='srcm';
@@ -490,12 +535,50 @@ require_once 'research_common.php';
 		
 
 			echo '<div class="jumbotron tab-pane container active" id=assigned>';
-				list_application_for_reviewer($link,'010.srcm_assigned','view_application',$_SESSION['login']);
+				list_application_for_reviewer($link,'010.srcm_assigned','view_application',$_SESSION['login'],$who_string='s');
 			echo '</div>';
 			
 			echo '</div>'; //for srcm collapse
 			
-			
+				//////for focus of appropriate section//////
+		if(isset($_POST['focus']))
+		{
+			if($_POST['focus']=='s')
+			{
+				//////for focus of appropriate section//////
+				$focus=array(
+								'view_application_s'=>['srcm'],
+								'save_comment'=>['srcm']
+							);
+
+				$focuss=array(
+								'view_application_s'=>['s_application_tab'],
+								'save_comment'=>['s_comment_tab']
+							);
+							
+				if(isset($focus[$_POST['action']]))
+				{
+					echo '<script>';
+					foreach ($focus[$_POST['action']] as $id)
+					{
+						echo '$("#'.$id.'").collapse("show");';
+					}
+					echo '</script>';
+				}
+
+				if(isset($focuss[$_POST['action']]))
+				{
+					echo '<script>';
+					foreach ($focuss[$_POST['action']] as $id)
+					{
+						echo '$("#'.$id.'").tab("show");';
+					}
+					echo '</script>';
+				}
+			}
+		}
+				//////for focus of appropriate section//////
+					
 	}
 	
 	if(is_user_type($link,$_SESSION['login'],'srcms'))
@@ -639,7 +722,7 @@ require_once 'research_common.php';
 			$_SESSION['dsp']='ecm';
 		}		
 			echo '<div class="jumbotron tab-pane container active" id=assigned>';
-				list_application_for_reviewer($link,'041.ecm1_assigned','view_application_ecm1',$_SESSION['login']);
+				list_application_for_reviewer($link,'041.ecm1_assigned','view_application_ecm1',$_SESSION['login'],$who_string='ecm1');
 			echo '</div>';
 			
 			echo '</div>'; //for ecm collapse
@@ -785,7 +868,7 @@ require_once 'research_common.php';
 			$_SESSION['dsp']='ecm';
 		}		
 			echo '<div class="jumbotron tab-pane container active" id=assigned>';
-				list_application_for_reviewer($link,'042.ecm2_assigned','view_application_ecm2',$_SESSION['login']);
+				list_application_for_reviewer($link,'042.ecm2_assigned','view_application_ecm2',$_SESSION['login'],$who_string='ecm2');
 			echo '</div>';
 			
 			echo '</div>'; //for ecm collapse
@@ -931,7 +1014,7 @@ require_once 'research_common.php';
 			$_SESSION['dsp']='ecm';
 		}		
 			echo '<div class="jumbotron tab-pane container active" id=assigned>';
-				list_application_for_reviewer($link,'043.ecm3_assigned','view_application_ecm3',$_SESSION['login']);
+				list_application_for_reviewer($link,'043.ecm3_assigned','view_application_ecm3',$_SESSION['login'],$who_string='ecm3');
 			echo '</div>';
 			
 			echo '</div>'; //for ecm collapse
@@ -1060,6 +1143,7 @@ if(isset($_POST['session_name'])){$post='session_name='.$_POST['session_name'];}
 //if(isset($_SESSION['dsp'])){$dsp='\'#'.$_SESSION['dsp'].'\'';}else{$dsp='';}
 //$dsp='';
 
+/*
 $focus=array(
 'new_application'=>['get_application_data','researcher'],
 'insert_application'=>['researcher'],
@@ -1067,16 +1151,16 @@ $focus=array(
 'update_application'=>['researcher'],
 'upload_attachment'=>['researcher'],
 'save_comment'=>['researcher'],
+'view_application'=>['srcm']
 );
 
 $focuss=array(
-'update_application'=>['application_tab'],
-'upload_attachment'=>['application_tab'],
-'save_comment'=>['comment_tab']
-
+'update_application'=>['r_application_tab'],
+'upload_attachment'=>['r_application_tab'],
+'save_comment'=>['r_comment_tab']
 );
 
-/*
+
 if(isset($focus[$_POST['action']]))
 {
 	echo '<script>';
@@ -1097,6 +1181,7 @@ if(isset($focuss[$_POST['action']]))
 	}
 	echo '</script>';
 }
+
 */
 
 ?>
