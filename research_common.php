@@ -44,7 +44,7 @@ function list_application_for_srcm_assignment($link)
 	echo '</table>';
 }
 
-function list_application_status($link,$status,$action='none',$message='')
+function list_application_status($link,$status,$action='none',$message='',$who_string='ss')
 {
 	$result=run_query($link,$GLOBALS['database'],'select * from proposal where status=\''.$status.'\' and (forwarded!=1 or forwarded is null) ');
 	echo '<table class="table table-striped"><tr><th colspan=10>List of research application with current status of <span class=bg-danger>'.$status.'</span></th></tr>
@@ -59,8 +59,9 @@ function list_application_status($link,$status,$action='none',$message='')
 		if($action!='none')
 		{
 					echo '<form method=post>
-						<button class="btn btn-sm btn-block btn-info" name=action value=\''.$action.'\'  >'.$ar['id'].' '.$message.'</button>
+						<button class="btn btn-sm btn-block btn-info" name=action value=\''.$action.'_'.$who_string.'\'  >'.$ar['id'].' '.$message.'</button>
 						<input type=hidden name=proposal_id value=\''.$ar['id'].'\'>
+						<input type=hidden name=focus value=\''.$who_string.'\'>
 						<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>
 					</form>';
 		}
@@ -862,6 +863,8 @@ function approve($link,$proposal_id,$who_string)
 			echo '<form method=post>';
 				echo '<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>';
 				echo '<input type=hidden name=proposal_id value=\''.$proposal_id.'\'>';
+				echo '<input type=hidden name=focus value=\''.$who_string.'\'>';
+				
 				echo '<textarea class="form-control" name=comment></textarea>';
 				echo '<button  onclick="return confirm(\'Do you really want to approve application?\');" name=action value=\'approve_'.$who_string.'\' class="btn btn-primary btn-block">Forward</button>';
 			echo '</form>';

@@ -527,7 +527,7 @@ require_once 'research_common.php';
 		}	
 						
 		//if($_POST['action']=='view_application' || $_POST['action']=='save_comment' ||$_POST['action']=='approve')
-		if($_POST['action']=='view_application_s' ||$_POST['action']=='approve')
+		if($_POST['action']=='view_application_s' ||$_POST['action']=='approve_s'||$_POST['action']=='save_comment')
 		{
 			view_entire_application($link,$_POST['proposal_id'],$who_string='s');
 			$_SESSION['dsp']='srcm';
@@ -548,12 +548,14 @@ require_once 'research_common.php';
 				//////for focus of appropriate section//////
 				$focus=array(
 								'view_application_s'=>['srcm'],
-								'save_comment'=>['srcm']
+								'save_comment'=>['srcm'],
+								'approve_s'=>['srcm']
 							);
 
 				$focuss=array(
 								'view_application_s'=>['s_application_tab'],
-								'save_comment'=>['s_comment_tab']
+								'save_comment'=>['s_comment_tab'],
+								'approve_s'=>   ['s_comment_tab']
 							);
 							
 				if(isset($focus[$_POST['action']]))
@@ -588,7 +590,7 @@ require_once 'research_common.php';
 		/////
 		echo '<h3 data-toggle="collapse" data-target="#srcms" class="bg-warning">Activity as SRCMS <font size="4" color="blue">(Click to Expand)</font></h3>';
 		echo '<div id="srcms" class="collapse">';
-		if($_POST['action']=='assign_reviewer')
+		if($_POST['action']=='assign_reviewer_ss')
 		{
 			echo '<div class="jumbotron">';
 				list_single_application($link,$_POST['proposal_id']);
@@ -652,7 +654,7 @@ require_once 'research_common.php';
 			<div class="tab-content">';
 		
 			echo '<div class="jumbotron tab-pane container" id=s_applied>';
-				list_application_status($link,'001.applied','assign_reviewer');
+				list_application_status($link,'001.applied','assign_reviewer',$who_string='ss');
 			echo '</div>';
 			echo '<div class="jumbotron tab-pane container" id=s_assi>';
 				list_application_status($link,'010.srcm_assigned','assign_reviewer');
@@ -688,13 +690,47 @@ require_once 'research_common.php';
 			echo '</div>';//for tab-content
 			
 			echo '</div>';//for srcms collapsible
-/*
-			echo '
-					<form action=today_activity.php method=post target=_blank>
-					<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>
-							<button name=today_activity> Today Activity</button>
-					</form>';
-*/		
+
+				//////for focus of appropriate section//////
+		if(isset($_POST['focus']))
+		{
+			if($_POST['focus']=='ss')
+			{
+				//////for focus of appropriate section//////
+				$focus=array(
+								'assign_reviewer_ss'=>['srcms']
+							);
+
+				$focuss=array(
+
+							);
+							
+				if(isset($focus[$_POST['action']]))
+				{
+					echo '<script>';
+					foreach ($focus[$_POST['action']] as $id)
+					{
+						echo '$("#'.$id.'").collapse("show");';
+					}
+					echo '</script>';
+				}
+
+				if(isset($focuss[$_POST['action']]))
+				{
+					echo '<script>';
+					foreach ($focuss[$_POST['action']] as $id)
+					{
+						echo '$("#'.$id.'").tab("show");';
+					}
+					echo '</script>';
+				}
+			}
+		}
+				//////for focus of appropriate section//////
+	
+
+
+	
 		}
 	
 	if(is_user_type($link,$_SESSION['login'],'ecm1'))
