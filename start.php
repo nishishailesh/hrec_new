@@ -447,10 +447,17 @@ require_once 'research_common.php';
 				//$_SESSION['dsp']='researcher';
 			}
        
-       if(isset($_POST['proposal_id']) && in_array($_POST['proposal_id'],get_researcher_application_id_array($link)))
-       {
-			view_entire_application_for_applicant($link,$_POST['proposal_id']);   
-	   }
+       
+       	if(isset($_POST['focus']))
+		{
+			if($_POST['focus']=='r')
+			{
+				if(isset($_POST['proposal_id']) && in_array($_POST['proposal_id'],get_researcher_application_id_array($link)))
+				{
+					view_entire_application_for_applicant($link,$_POST['proposal_id']);   
+				}
+			}
+		}
 	   
        list_researcher_application($link);
 	
@@ -597,8 +604,11 @@ require_once 'research_common.php';
 			//echo '</div>';
 			//echo '<div class="jumbotron">';
 			echo '<h3 data-toggle="collapse" data-target="#listr" class="bg-info">List Reviewers <font size="4" color="blue">(Click to Expand)</font></h3>';
-		    echo '<div id="listr" class="collapse">';
-				list_srcm_reviewer($link,$_POST['proposal_id']);
+		    echo '<div id="listr" >';
+				if($_POST['focus']=='ss')
+				{
+					list_srcm_reviewer($link,$_POST['proposal_id']);
+				}
 			echo '</div></div>';
 			$_SESSION['dsp']='srcms';
 		}
@@ -607,7 +617,7 @@ require_once 'research_common.php';
 		/////
 		//2//
 		/////
-		if($_POST['action']=='save_reviewer')
+		if($_POST['action']=='save_srcm_reviewer')
 		{
 			//save_srcm_reviewer($link,$_POST);
 			//$applicant_id=get_applicant_id($link,$_POST['proposal_id']);
@@ -616,10 +626,13 @@ require_once 'research_common.php';
 			
 			echo '<div class="jumbotron">';
 				list_single_application($link,$_POST['proposal_id']);
-			echo '<h3 data-toggle="collapse" data-target="#listr" class="bg-info">List Reviewers <font size="4" color="blue">(Click to Expand)</font></h3>';
-		    echo '<div id="listr" class="collapse">';
-				list_srcm_reviewer($link,$_POST['proposal_id']);
-			echo '</div></div>';
+				/*
+				echo '<h3 data-toggle="collapse" data-target="#listr" class="bg-info">List Reviewers <font size="4" color="blue">(Click to Expand)</font></h3>';
+				echo '<div id="listr" class="collapse">';
+					list_srcm_reviewer($link,$_POST['proposal_id']);
+				echo '</div>';
+				*/
+			echo '</div>';
 			$_SESSION['dsp']='srcms';
 		}
 
@@ -642,10 +655,10 @@ require_once 'research_common.php';
 		}
 						
 			echo '<ul class="nav nav-pills">
-			<li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#s_dashboard">Dashboard</a></li>
-			<li class="nav-item"><a class="nav-link " data-toggle="pill" href="#s_applied">Applied</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#s_assi">Reviewers Assigned (SRC)</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#s_reviewed">Reviewed (SRC)</a></li>
+			<li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#ss_dashboard">Dashboard</a></li>
+			<li class="nav-item"><a class="nav-link " data-toggle="pill" href="#ss_applied">Applied</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#ss_assi">Reviewers Assigned (SRC)</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#ss_reviewed">Reviewed (SRC)</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#sent_to_ecms1">Sent to ECMS1</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#sent_to_ecms2">Sent to ECMS2</a></li>
 			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#sent_to_ecms3">Sent to ECMS3</a></li>
@@ -653,13 +666,13 @@ require_once 'research_common.php';
 
 			<div class="tab-content">';
 		
-			echo '<div class="jumbotron tab-pane container" id=s_applied>';
-				list_application_status($link,'001.applied','assign_reviewer',$who_string='ss');
+			echo '<div class="jumbotron tab-pane container" id=ss_applied>';
+				list_application_status($link,'001.applied','assign_reviewer','',$who_string='ss');
 			echo '</div>';
-			echo '<div class="jumbotron tab-pane container" id=s_assi>';
+			echo '<div class="jumbotron tab-pane container" id=ss_assi>';
 				list_application_status($link,'010.srcm_assigned','assign_reviewer');
 			echo '</div>';
-			echo '<div class="jumbotron tab-pane container" id=s_reviewed>';
+			echo '<div class="jumbotron tab-pane container" id=ss_reviewed>';
 				list_application_status_multiple($link,'020.srcm_approved',['send_to_ecms1','send_to_ecms2','send_to_ecms3']);
 			echo '</div>';
 
@@ -698,7 +711,8 @@ require_once 'research_common.php';
 			{
 				//////for focus of appropriate section//////
 				$focus=array(
-								'assign_reviewer_ss'=>['srcms']
+								'assign_reviewer_ss'=>['srcms'],
+								'save_srcm_reviewer'=>['srcms']
 							);
 
 				$focuss=array(
@@ -920,7 +934,7 @@ require_once 'research_common.php';
 		echo '<h3 data-toggle="collapse" data-target="#ecms2" class="bg-warning">Activity as ECMS2 <font size="4" color="blue">(Click to Expand)</font></h3>';
 		
 		echo '<div id="ecms2" class="collapse">';
-		if($_POST['action']=='assign_reviewer')
+		if($_POST['action']=='assign_reviewer_ecm2')
 		{
 			echo '<div class="jumbotron">';
 				list_single_application($link,$_POST['proposal_id']);
@@ -945,14 +959,19 @@ require_once 'research_common.php';
 
 		if($_POST['action']=='save_reviewer_ecm2')
 		{
+			
 			echo '<div class="jumbotron">';
 	
 				list_single_application($link,$_POST['proposal_id']);
-			echo '<h3 data-toggle="collapse" data-target="#listr_ecms2" class="bg-info">List Reviewers <font size="4" color="blue">(Click to Expand)</font></h3>';
-		    echo '<div id="listr_ecms2" class="collapse">';
-				list_ecm_reviewer($link,$_POST['proposal_id'],'ecm2');
-			echo '</div></div>';
+					/*
+					echo '<h3 data-toggle="collapse" data-target="#listr_ecms2" class="bg-info">List Reviewers <font size="4" color="blue">(Click to Expand)</font></h3>';
+					echo '<div id="listr_ecms2" class="collapse">';
+						list_ecm_reviewer($link,$_POST['proposal_id'],'ecm2');
+					echo '</div>';
+					*/
+			echo '</div>';
 			$_SESSION['dsp']='ecms';
+			
 		}
 		
 		
@@ -993,10 +1012,10 @@ require_once 'research_common.php';
 		<div class="tab-content">';
 		
 			echo '<div class="jumbotron tab-pane container " id=ecms2_applied>';
-				list_application_status($link,'032.sent_to_ecms2','assign_reviewer');
+				list_application_status($link,'032.sent_to_ecms2','assign_reviewer','','ecm2');
 			echo '</div>';
 			echo '<div class="jumbotron tab-pane container" id=ecms2_assi>';
-				list_application_status($link,'042.ecm2_assigned','assign_reviewer');
+				list_application_status($link,'042.ecm2_assigned','assign_reviewer','','ecm2');
 			echo '</div>';
 			echo '<div class="jumbotron tab-pane container" id=ecms2_approve><p>';		
 				list_application_status_for_ecms_final($link,'062.sent_to_committee2','ecm2');
@@ -1022,6 +1041,47 @@ require_once 'research_common.php';
 		echo '</div>';//for tab-content
 		
 		echo '</div>';//for ecms collapsible
+		
+		
+					//////for focus of appropriate section//////
+					if(isset($_POST['focus']))
+					{
+						if($_POST['focus']=='ecm2')
+						{
+							//////for focus of appropriate section//////
+							$focus=array(
+											'assign_reviewer_ecm2'=>['ecms2'],
+											'save_reviewer_ecm2'=>['ecms2']
+										);
+
+							$focuss=array(
+
+										);
+										
+							if(isset($focus[$_POST['action']]))
+							{
+								echo '<script>';
+								foreach ($focus[$_POST['action']] as $id)
+								{
+									echo '$("#'.$id.'").collapse("show");';
+								}
+								echo '</script>';
+							}
+
+							if(isset($focuss[$_POST['action']]))
+							{
+								echo '<script>';
+								foreach ($focuss[$_POST['action']] as $id)
+								{
+									echo '$("#'.$id.'").tab("show");';
+								}
+								echo '</script>';
+							}
+						}
+					}
+				//////for focus of appropriate section//////
+	
+	
 	}
 
 

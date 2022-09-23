@@ -1100,6 +1100,7 @@ function list_srcm_reviewer($link,$proposal_id)
 
 	echo '<form method=post>
 			<input type=hidden name=proposal_id value=\''.$proposal_id.'\'>
+			<input type=hidden name=focus value=ss>
 			<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>';
 
 	echo '<table class="table table-striped table-success">
@@ -1962,6 +1963,7 @@ function list_ecm_reviewer($link,$proposal_id,$ecm_string)
 
 	echo '<form method=post>
 			<input type=hidden name=proposal_id value=\''.$proposal_id.'\'>
+			<input type=hidden name=focus value='.$ecm_string.'>
 			<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>';
 
 	echo '<table class="table table-striped table-success">
