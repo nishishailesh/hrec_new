@@ -2141,28 +2141,28 @@ function count_selected_ecm_reviewer($link,$proposal_id)
 function view_entire_application_ecm($link,$proposal_id,$who_string)
 {
 	echo '<ul class="nav nav-pills">
-		<li class="nav-item"><a id="'.$who_string.'_application_tab" class="nav-link active" data-toggle="pill" href="#"'.$who_string.'_application">Application</a></li>
-		<li class="nav-item"><a id="'.$who_string.'_review_status_tab"  class="nav-link" data-toggle="pill" 	href="#"'.$who_string.'_review_status">Review Status</a></li>
-		<li class="nav-item"><a id="'.$who_string.'_comment_tab" class="nav-link" data-toggle="pill" 			href="#"'.$who_string.'_comment">Comments (ECM)</a></li>
-		<li class="nav-item"><a id="'.$who_string.'_make_comment_tab"  class="nav-link" data-toggle="pill" 		href="#"'.$who_string.'_make_comment">Make Comment (ECM)</a></li>
-		<li class="nav-item"><a id="'.$who_string.'_approve_tab" class="nav-link" data-toggle="pill" 			href="#"'.$who_string.'_approve">Forward To EC</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_application_tab" class="nav-link active" data-toggle="pill" href="#'.$who_string.'_application">Application</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_review_status_tab"  class="nav-link" data-toggle="pill" 	href="#'.$who_string.'_review_status">Review Status</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_comment_tab" class="nav-link" data-toggle="pill" 			href="#'.$who_string.'_comment">Comments (ECM)</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_make_comment_tab"  class="nav-link" data-toggle="pill" 		href="#'.$who_string.'_make_comment">Make Comment (ECM)</a></li>
+		<li class="nav-item"><a id="'.$who_string.'_approve_tab" class="nav-link" data-toggle="pill" 			href="#'.$who_string.'_approve">Forward To EC</a></li>
 	</ul>';
 	
 	echo '<div class="tab-content">';	
 
-		echo '<div class="jumbotron tab-pane container active" id="'.$who_string.'_application>';
+		echo '<div class="jumbotron tab-pane container active" id='.$who_string.'_application>';
 			list_single_application_with_all_fields($link,$proposal_id,$who_string);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id="'.$who_string.'_review_status>';
+		echo '<div class="jumbotron tab-pane container" id='.$who_string.'_review_status>';
 			show_review_status($link,$proposal_id);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id="'.$who_string.'_comment>';
+		echo '<div class="jumbotron tab-pane container" id='.$who_string.'_comment>';
 			display_comment($link,$proposal_id);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id="'.$who_string.'_make_comment>';
+		echo '<div class="jumbotron tab-pane container" id='.$who_string.'_make_comment>';
 			make_comment($link,$proposal_id,$who_string);
 		echo '</div>';
-		echo '<div class="jumbotron tab-pane container" id="'.$who_string.'_approve>';
+		echo '<div class="jumbotron tab-pane container" id='.$who_string.'_approve>';
 			approve($link,$proposal_id,$who_string,$who_string);
 		echo '</div>';
 
@@ -2420,8 +2420,9 @@ function list_application_status_for_ecms_final($link,$status,$who_string)
 					echo '<form method=post>
 						<button class="btn btn-sm btn-block btn-info" name=action value=view_'.$who_string.' >'.$ar['id'].' View</button>
 						<button class="btn btn-sm btn-block btn-info" name=action value='.$who_string.'_approve >'.$ar['id'].' Approve</button>
-						<button class="btn btn-sm btn-block btn-info" name=action value=ecms_sent_back >'.$ar['id'].' Send back</button>
+						<button class="btn btn-sm btn-block btn-info" name=action value='.$who_string.'_sent_back >'.$ar['id'].' Send back</button>
 						<input type=hidden name=proposal_id value=\''.$ar['id'].'\'>
+						<input type=hidden name=focus value=\''.$who_string.'\'>
 						<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>
 					</form>';
 		

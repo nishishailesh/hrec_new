@@ -292,18 +292,18 @@ require_once 'research_common.php';
 
 	if(is_user_type($link,$_SESSION['login'],'ecms2'))
 	{	
-		if($_POST['action']=='assign_reviewer')
+		if($_POST['action']=='assign_reviewer_ecms2')
 		{
 
 		}
 
-		if($_POST['action']=='ecm2_approve')
+		if($_POST['action']=='ecms2_approve')
 		{
 			set_application_status($link,$_POST['proposal_id'],'072.ecms2_approved');
 			$_SESSION['dsp']='ecms';
 		}
 				
-		if($_POST['action']=='ecms_sent_back')
+		if($_POST['action']=='ecms2_sent_back')
 		{
 			$list_of_reviewer=get_only_ecm_reviewer($link,$_POST['proposal_id']);
 			foreach($list_of_reviewer as $value)
@@ -317,12 +317,12 @@ require_once 'research_common.php';
 			$_SESSION['dsp']='ecms';
 		}
 
-		if($_POST['action']=='save_reviewer_ecm2')
+		if($_POST['action']=='save_reviewer_ecms2')
 		{
 			save_ecm_reviewer($link,$_POST,'042.ecm2_assigned');
 		}
 
-		if($_POST['action']=='view')
+		if($_POST['action']=='view_ecms2')
 		{
 
 		}
@@ -918,17 +918,60 @@ require_once 'research_common.php';
 		{
 		}
 
-		if($_POST['action']=='view_application_ecm2' ||$_POST['action']=='approve')
+		if($_POST['action']=='view_application_ecm2' || $_POST['action']=='save_comment')
 		{
 			view_entire_application_ecm($link,$_POST['proposal_id'],'ecm2');
 			$_SESSION['dsp']='ecm';
 		}		
 			echo '<div class="jumbotron tab-pane container active" id=assigned>';
-				list_application_for_reviewer($link,'042.ecm2_assigned','view_application_ecm2',$_SESSION['login'],$who_string='ecm2');
+				list_application_for_reviewer($link,'042.ecm2_assigned','view_application',$_SESSION['login'],$who_string='ecm2');
 			echo '</div>';
 			
 			echo '</div>'; //for ecm collapse
 			
+
+
+		if(isset($_POST['focus']))
+		{
+			if($_POST['focus']=='ecm2')
+			{
+				//////for focus of appropriate section//////
+				$focus=array(
+								'view_application_ecm2'=>['ecm2'],
+								'save_comment'=>['ecm2'],
+								'approve_ecm2'=>['ecm2'],
+								
+							);
+
+				$focuss=array(
+								'view_application_ecm2'=>['ecm2_application_tab'],
+								'save_comment'=>['ecm2_comment_tab']
+
+							);
+							
+				if(isset($focus[$_POST['action']]))
+				{
+					echo '<script>';
+					foreach ($focus[$_POST['action']] as $id)
+					{
+						echo '$("#'.$id.'").collapse("show");';
+					}
+					echo '</script>';
+				}
+
+				if(isset($focuss[$_POST['action']]))
+				{
+					echo '<script>';
+					foreach ($focuss[$_POST['action']] as $id)
+					{
+						echo '$("#'.$id.'").tab("show");';
+					}
+					echo '</script>';
+				}
+			}
+		}
+				//////for focus of appropriate section//////
+					
 			
 	}
 
@@ -940,7 +983,7 @@ require_once 'research_common.php';
 		echo '<h3 data-toggle="collapse" data-target="#ecms2" class="bg-warning">Activity as ECMS2 <font size="4" color="blue">(Click to Expand)</font></h3>';
 		
 		echo '<div id="ecms2" class="collapse">';
-		if($_POST['action']=='assign_reviewer_ecm2')
+		if($_POST['action']=='assign_reviewer_ecms2')
 		{
 			echo '<div class="jumbotron">';
 				list_single_application($link,$_POST['proposal_id']);
@@ -949,21 +992,21 @@ require_once 'research_common.php';
 			echo '<h3 data-toggle="collapse" data-target="#listr_ecms2" class="bg-info">List Reviewers <font size="4" color="blue">(Click to Expand)</font></h3>';
 		    echo '<div id="listr_ecms2">';
 
-				list_ecm_reviewer($link,$_POST['proposal_id'],'ecm2');
+				list_ecm_reviewer($link,$_POST['proposal_id'],'ecms2');
 			echo'</div>';
 			echo '</div>';
 			$_SESSION['dsp']='ecms';
 		}
 		
-		if($_POST['action']=='ecms_approve')
+		if($_POST['action']=='ecms2_approve')
 		{
 		}
 			
-		if($_POST['action']=='ecms_sent_back')
+		if($_POST['action']=='ecms2_sent_back')
 		{
 		}
 
-		if($_POST['action']=='save_reviewer_ecm2')
+		if($_POST['action']=='save_reviewer_ecms2')
 		{
 			
 			echo '<div class="jumbotron">';
@@ -981,7 +1024,7 @@ require_once 'research_common.php';
 		}
 		
 		
-		if($_POST['action']=='view_ecm2')
+		if($_POST['action']=='view_ecms2')
 		{
 			echo '<ul class="nav nav-pills">
 			<li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#ecm2_application">Application</a></li>
@@ -1008,23 +1051,23 @@ require_once 'research_common.php';
 		
 		
 	echo '<ul class="nav nav-pills">
-	        <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#ecms2_dashboard">Dashboard</a></li>
-			<li class="nav-item"><a class="nav-link " data-toggle="pill" href="#ecms2_applied">Assign EC2 Reviewer</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#ecms2_assi">EC2 Reviewers Assigned</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#ecms2_approve">Require EC2 approval</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#ecms2_print">EC2 Approved</a></li>
+	        <li class="nav-item"><a id=ecms2_dashboard_tab class="nav-link active" data-toggle="pill" href="#ecms2_dashboard">Dashboard</a></li>
+			<li class="nav-item"><a id=ecms2_applied_tab class="nav-link " data-toggle="pill" href="#ecms2_applied">Assign EC2 Reviewer</a></li>
+			<li class="nav-item"><a id=ecms2_assi_tab class="nav-link" data-toggle="pill" href="#ecms2_assi">EC2 Reviewers Assigned</a></li>
+			<li class="nav-item"><a id=ecms2_approve_tab class="nav-link" data-toggle="pill" href="#ecms2_approve">Require EC2 approval</a></li>
+			<li class="nav-item"><a id=ecms2_print_tab class="nav-link" data-toggle="pill" href="#ecms2_print">EC2 Approved</a></li>
 		</ul>
 		
 		<div class="tab-content">';
 		
 			echo '<div class="jumbotron tab-pane container " id=ecms2_applied>';
-				list_application_status($link,'032.sent_to_ecms2','assign_reviewer','','ecm2');
+				list_application_status($link,'032.sent_to_ecms2','assign_reviewer','','ecms2');
 			echo '</div>';
 			echo '<div class="jumbotron tab-pane container" id=ecms2_assi>';
-				list_application_status($link,'042.ecm2_assigned','assign_reviewer','','ecm2');
+				list_application_status($link,'042.ecm2_assigned','assign_reviewer','','ecms2');
 			echo '</div>';
 			echo '<div class="jumbotron tab-pane container" id=ecms2_approve><p>';		
-				list_application_status_for_ecms_final($link,'062.sent_to_committee2','ecm2');
+				list_application_status_for_ecms_final($link,'062.sent_to_committee2','ecms2');
 			echo '</p></div>';
 			echo '<div class="jumbotron tab-pane container" id=ecms2_print>';
 			//echo 'Print approval here';
@@ -1052,16 +1095,22 @@ require_once 'research_common.php';
 					//////for focus of appropriate section//////
 					if(isset($_POST['focus']))
 					{
-						if($_POST['focus']=='ecm2')
+						if($_POST['focus']=='ecms2')
 						{
 							//////for focus of appropriate section//////
 							$focus=array(
-											'assign_reviewer_ecm2'=>['ecms2'],
-											'save_reviewer_ecm2'=>['ecms2']
+											'assign_reviewer_ecms2'=>['ecms2'],
+											'save_reviewer_ecms2'=>['ecms2'],
+											'ecms2_approve'=>['ecms2'],
+											'view_ecms2'=>['ecms2'],
+											'ecms2_sent_back'=>['ecms2']
 										);
 
 							$focuss=array(
-
+											'save_reviewer_ecms2'=>['ecms2_assi_tab'],
+											'ecms2_approve'=>['ecms2_approve_tab'],
+											'view_ecms2'=>['ecms2_approve_tab'],
+											'ecms2_sent_back'=>['ecms2_approve_tab']
 										);
 										
 							if(isset($focus[$_POST['action']]))
