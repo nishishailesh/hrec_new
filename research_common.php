@@ -110,6 +110,7 @@ function list_application_status_multiple($link,$status,$action=array('none'))
 					}
 					
 					echo '<input type=hidden name=proposal_id value=\''.$ar['id'].'\'>
+						  <input type=hidden name=focus value=ss>
 						<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>
 					</form>';
 		}

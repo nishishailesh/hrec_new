@@ -655,13 +655,13 @@ require_once 'research_common.php';
 		}
 						
 			echo '<ul class="nav nav-pills">
-			<li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#ss_dashboard">Dashboard</a></li>
-			<li class="nav-item"><a class="nav-link " data-toggle="pill" href="#ss_applied">Applied</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#ss_assi">Reviewers Assigned (SRC)</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#ss_reviewed">Reviewed (SRC)</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#sent_to_ecms1">Sent to ECMS1</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#sent_to_ecms2">Sent to ECMS2</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#sent_to_ecms3">Sent to ECMS3</a></li>
+			<li class="nav-item"><a id=ss_dashboard_tab class="nav-link active" data-toggle="pill" href="#ss_dashboard">Dashboard</a></li>
+			<li class="nav-item"><a id-ss_applied_tab class="nav-link " data-toggle="pill" href="#ss_applied">Applied</a></li>
+			<li class="nav-item"><a id=ss_assi_tab class="nav-link" data-toggle="pill" href="#ss_assi">Reviewers Assigned (SRC)</a></li>
+			<li class="nav-item"><a id=ss_reviewed_tab class="nav-link" data-toggle="pill" href="#ss_reviewed">Reviewed (SRC)</a></li>
+			<li class="nav-item"><a id=ss_sent_to_ecms1_tab class="nav-link" data-toggle="pill" href="#sent_to_ecms1">Sent to ECMS1</a></li>
+			<li class="nav-item"><a id=ss_sent_to_ecms2_tab class="nav-link" data-toggle="pill" href="#sent_to_ecms2">Sent to ECMS2</a></li>
+			<li class="nav-item"><a id=ss_sent_to_ecms3_tab class="nav-link" data-toggle="pill" href="#sent_to_ecms3">Sent to ECMS3</a></li>
 			</ul>
 
 			<div class="tab-content">';
@@ -712,11 +712,17 @@ require_once 'research_common.php';
 				//////for focus of appropriate section//////
 				$focus=array(
 								'assign_reviewer_ss'=>['srcms'],
-								'save_srcm_reviewer'=>['srcms']
+								'save_srcm_reviewer'=>['srcms'],
+								'send_to_ecms2'=>['srcms'],
+								'send_to_ecms3'=>['srcms'],
+								'send_to_ecms1'=>['srcms']
 							);
 
 				$focuss=array(
-
+								'save_srcm_reviewer'=>['ss_assi_tab'],
+								'send_to_ecms2'=>['ss_reviewed_tab'],
+								'send_to_ecms3'=>['ss_reviewed_tab'],
+								'send_to_ecms1'=>['ss_reviewed_tab']
 							);
 							
 				if(isset($focus[$_POST['action']]))
