@@ -1948,13 +1948,13 @@ function echo_applicant_info_popup($link,$applicant_id,$proposal_id)
 }
 
 ///////For EC
-function list_ecm_reviewer($link,$proposal_id,$ecm_string)
+function list_ecm_reviewer($link,$proposal_id,$ecm_sql,$ecm_focus)
 {
 	//echo 'xxxxx';
 	$applicant_id=get_applicant_id($link,$proposal_id);
 	
 	$sql_eligible_reviewer='select * from user where 
-								(type REGEXP \''.$ecm_string.'$\' or type REGEXP \''.$ecm_string.'[^s]\')
+								(type REGEXP \''.$ecm_sql.'$\' or type REGEXP \''.$ecm_sql.'[^s]\')
 								and
 								id!=\''.$applicant_id.'\'';
 	//echo 	$sql_eligible_reviewer;
@@ -1964,7 +1964,7 @@ function list_ecm_reviewer($link,$proposal_id,$ecm_string)
 
 	echo '<form method=post>
 			<input type=hidden name=proposal_id value=\''.$proposal_id.'\'>
-			<input type=hidden name=focus value='.$ecm_string.'>
+			<input type=hidden name=focus value='.$ecm_focus.'>
 			<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>';
 
 	echo '<table class="table table-striped table-success">
@@ -1983,7 +1983,7 @@ function list_ecm_reviewer($link,$proposal_id,$ecm_string)
 				<td>'.$ar['type'].'</td>
 		</tr>';
 	}
-	echo '<tr><td colspan="3"><button onclick="return confirm(\'Do you really want to save application?\');"  name=action value=\'save_reviewer_'.$ecm_string.'\' class="btn btn-block btn-success">Save</button></td></tr>';
+	echo '<tr><td colspan="3"><button onclick="return confirm(\'Do you really want to save application?\');"  name=action value=\'save_reviewer_'.$ecm_focus.'\' class="btn btn-block btn-success">Save</button></td></tr>';
 	echo '</table>';	
 	echo '</form>';
 }
