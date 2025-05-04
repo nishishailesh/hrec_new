@@ -1,0 +1,1 @@
+/usr/share/nchs/hrec_new/cl_general_view_info_data.sql

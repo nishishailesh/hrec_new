@@ -1,0 +1,1 @@
+/usr/share/nchs/hrec_new/update_hrec_to_git.sh

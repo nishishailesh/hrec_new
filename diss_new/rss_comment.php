@@ -1,0 +1,1 @@
+/usr/share/nchs/hrec_new/rss_comment.php
