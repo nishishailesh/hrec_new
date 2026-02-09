@@ -77,6 +77,18 @@ $GLOBALS['Department_Type']=array(
 									'Skin and VD'								
 								);
 								
+
+$GLOBALS['applicable_tags']=array(
+                  'funded',
+                  'educational',
+                  'research_at_other_institutes',
+                  'researcher_from_other_institutes',
+                  'expediate_request',
+                  'review_exemption_request'
+                  );
+
+
+
 								
 $GLOBALS['upload_type_help']=
 '<b>Following documents in only signed PDF</b><br>

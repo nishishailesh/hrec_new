@@ -20,63 +20,65 @@ $GLOBALS['send_email']=1;
 //$GLOBALS['send_email']=0;
 $GLOBALS['email_database_server']='11.207.1.2';
 $GLOBALS['proposal_type']=array(
-                  'PG Dissertation',
-                  'ICMR STS',
-                  'Research Project',
-                  'Poster/Paper',
-                  'PhD',
-                  'Clinical Trial',
-                  'Other'
-                );
+									'PG Dissertation',
+									'Super Speciality Dissertation',
+									'ICMR STS',
+									'Research Project',
+									'Poster/Paper',
+									'PhD',
+									'Clinical Trial',
+									'Other'
+								);
 
 
 $GLOBALS['attachment_type']=array(
-                  '',
-                  'Covering Letter',
-                  'Permission from MS',
-                  'Permission from Dean',
-                  'Permission from collaborator',
-                  'Permission from resource-site',
-                  'Departmental Minutes',
-                  'Protocol',
-                  'Data collection questionnaire',
-                  'Assesment tools',
-                  'Patient information sheet',
-                  'Patient informed consent form',
-                  'References',
-                  'Undertakings',               
-                  'Other'
-                );
+									'',
+									'Covering Letter',
+									'Permission from MS',
+									'Permission from Dean',
+									'Permission from collaborator',
+									'Permission from resource-site',
+									'Departmental Minutes',
+									'Protocol',
+									'Data collection questionnaire',
+									'Assesment tools',
+									'Patient information sheet',
+									'Patient informed consent form',
+									'References',
+									'Undertakings',								
+									'Other'
+								);
 $GLOBALS['Department_Type']=array(
-                  '',
-                  'Anatomy',
-                  'Anesthesiology',
-                  'Biochemistry',
-                  'Burns and Plastic Surgery',
-                  'Community Medicine',
-                  'Dentistry',
-                  'Emergency Medicine',
-                  'ENT',
-                  'Forensic Medicine',
-                  'General surgery',
-                  'IHBT',
-                  'Medicine',
-                  'Microbiology',
-                  'Neurology',
-                  'Neurosurgery',
-                  'Obstetrics and Gynecology',
-                  'Ophthalmology',
-                  'Orthopedics',
-                  'Paediatrics',
-                  'Pathology',
-                  'Pharmacology',
-                  'Physiology',
-                  'Psychiatry',
-                  'Radiology',
-                  'Respiratory Medicine',
-                  'Skin and VD'               
-                );
-                
+									'',
+									'Anatomy',
+									'Anesthesiology',
+									'Biochemistry',
+									'Burns and Plastic Surgery',
+									'Community Medicine',
+									'Dentistry',
+									'Emergency Medicine',
+									'ENT',
+									'Forensic Medicine',
+									'General surgery',
+									'IHBT',
+									'Medicine',
+									'Microbiology',
+									'Neurology',
+									'Neurosurgery',
+									'Obstetrics and Gynecology',
+									'Ophthalmology',
+									'Orthopedics',
+									'Paediatrics',
+									'Pathology',
+									'Pharmacology',
+									'Physiology',
+									'Psychiatry',
+									'Radiology',
+									'Respiratory Medicine',
+									'Skin and VD'								
+								);
+								
+
 $GLOBALS['applicable_tags']=array(
                   'funded',
                   'educational',
@@ -85,7 +87,10 @@ $GLOBALS['applicable_tags']=array(
                   'expediate_request',
                   'review_exemption_request'
                   );
-                                  
+
+
+
+								
 $GLOBALS['upload_type_help']=
 '<b>Following documents in only signed PDF</b><br>
 <hr>

@@ -18,6 +18,7 @@ $GLOBALS['send_email']=0;
 $GLOBALS['email_database_server']='11.207.1.1';
 $GLOBALS['proposal_type']=array(
 									'PG Dissertation',
+									'Super Speciality Dissertation',
 									'ICMR STS',
 									'Research Project',
 									'Poster/Paper',

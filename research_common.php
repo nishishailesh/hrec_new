@@ -1692,7 +1692,7 @@ function edit_application($link,$proposal_id,$readonly='')
         <table class="table table-striped" width="50%">
     
           <tr>   
-             <th>Proposal Name</th>
+             <th>Proposal Name::</th>
              <td><textarea class="form-control" type=text name=proposal_name >'.$ar['proposal_name'].'</textarea></td>
              <input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>
              <input type=hidden name=applicantid value=\''.$_SESSION['login'].'\'>
@@ -1705,7 +1705,7 @@ function edit_application($link,$proposal_id,$readonly='')
                mk_select_from_array('type',$GLOBALS['proposal_type'],'',$ar['type']);
               
                echo '</td>';
-               echo '<td>Select appropriate type of proposal</td>';
+               echo '<td>Select appropriate type of proposal::</td>';
 
 
 
