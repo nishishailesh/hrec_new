@@ -5,7 +5,7 @@ require_once 'research_common.php';
 
 
 ////////User code below/////////////////////  
-  //print_r($_POST);
+  print_r($_POST);
 
   $link=get_link($GLOBALS['main_user'],$GLOBALS['main_pass']);
 
@@ -238,7 +238,14 @@ require_once 'research_common.php';
     {
       reverse_approval($link,$_POST['proposal_id'],$_POST['reviewer_id'],$_POST['comment']);
     }
-            
+
+    /////
+    //5//
+    /////   
+    if($_POST['action']=='delete_application')
+    {
+      delete_application($link,$_POST['protocol_id']);
+    }            
 
   }
 
@@ -690,6 +697,7 @@ Reviewers are requested to make comment on online proposal about suggestions mad
       <li class="nav-item"><a id=ss_sent_to_ecms1_tab class="nav-link" data-toggle="pill" href="#sent_to_ecms1">Sent to ECMS1</a></li>
       <li class="nav-item"><a id=ss_sent_to_ecms2_tab class="nav-link" data-toggle="pill" href="#sent_to_ecms2">Sent to ECMS2</a></li>
       <li class="nav-item"><a id=ss_sent_to_ecms3_tab class="nav-link" data-toggle="pill" href="#sent_to_ecms3">Sent to ECMS3</a></li>
+      <li class="nav-item"><a id=ss_delete_applocation_tav class="nav-link" data-toggle="pill" href="#delete_application">Delete Application</a></li>
       </ul>
 
       <div class="tab-content">';
@@ -714,6 +722,10 @@ Reviewers are requested to make comment on online proposal about suggestions mad
         list_application_status($link,'033.sent_to_ecms3');
       echo '</div>';
 
+      echo '<div class="jumbotron tab-pane container" id=delete_application>';
+        get_protocol_id_for_delete_application();
+      echo '</div>';
+      
       echo '<div class="jumbotron tab-pane container  active" id=s_dashboard>';
         if(isset($_POST['action']))
         {

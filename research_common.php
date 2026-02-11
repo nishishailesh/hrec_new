@@ -2876,4 +2876,58 @@ function is_user_type($link,$user_id,$type)
   if(in_array($type,$ex)){return true;}
   else{return false;}
 }
+
+function get_protocol_id_for_delete_application()
+{
+  echo '<h5>provide protocol id to delete an application</h5>';
+  echo '<h5>All data related to this protocol will be lost permanently</h5>';
+    echo '<form method=post class="d-inline">';
+    echo '<input type=hidden name=session_name value=\''.$_SESSION['login'].'\'>';
+    echo '<input type=hidden name=session_name value=\''.$_POST['session_name'].'\'>';      
+    echo '<input type=number name=protocol_id>';     
+    echo '<button class="btn btn-info"  
+      type=submit
+      name=action
+      onclick="return confirm(\'All data of this protocol_id will be lost. Be careful!!!!\');"
+      value=delete_application>delete</button>
+    </form>';
+}
+
+
+function delete_application($link,$protocol_id)
+{
+  $sql_comment='delete from comment where proposal_id=\''.$protocol_id.'\'';
+  if(!$result=run_query($link,$GLOBALS['database'],$sql_comment))
+  {
+    echo '<h3>Problem. Protocol comments deleted</h1>';
+  }
+  else
+  {
+    echo '<h3>Protocol comments deleted</h1>';
+  }
+
+  $sql_decision='delete from decision where proposal_id=\''.$protocol_id.'\'';
+  if(!$result=run_query($link,$GLOBALS['database'],$sql_decision))
+  {
+    echo '<h3>Problem. reviewer data not deleted</h1>';
+  }
+  else
+  {
+    echo '<h3>reviewer data deleted</h1>';
+  }  
+  
+  
+  $sql_protocol='delete from proposal where id=\''.$protocol_id.'\'';
+  if(!$result=run_query($link,$GLOBALS['database'],$sql_protocol))
+  {
+    echo '<h3>Problem. protocol data not deleted</h1>';
+  }
+  else
+  {
+    echo '<h3>protocol data deleted</h1>';
+  }  
+  
+  list_single_application($link,$protocol_id); 
+}
+
 ?>
