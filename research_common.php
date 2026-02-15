@@ -2896,10 +2896,22 @@ function get_protocol_id_for_delete_application()
 
 function delete_application($link,$protocol_id)
 {
+
+$sql_attachment='delete from attachment where proposal_id=\''.$protocol_id.'\'';
+if(!$result=run_query($link,$GLOBALS['database'],$sql_attachment))
+{
+     echo '<h3>problem. attachments not deleted</h1>';
+}
+else
+{
+    echo '<h3>problem. attachments deleted</h1>';
+}
+
+
   $sql_comment='delete from comment where proposal_id=\''.$protocol_id.'\'';
   if(!$result=run_query($link,$GLOBALS['database'],$sql_comment))
   {
-    echo '<h3>Problem. Protocol comments deleted</h1>';
+    echo '<h3>problem Protocol comments not deleted</h1>';
   }
   else
   {

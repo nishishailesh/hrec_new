@@ -1,1 +1,1 @@
-/usr/share/nchs/hrec_new/base/common.php
+/usr/share/gmcs_lib/hrec_new/base/common.php

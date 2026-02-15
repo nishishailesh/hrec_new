@@ -5,7 +5,7 @@ require_once 'research_common.php';
 
 
 ////////User code below/////////////////////  
-  print_r($_POST);
+  //print_r($_POST);
 
   $link=get_link($GLOBALS['main_user'],$GLOBALS['main_pass']);
 
